@@ -8,11 +8,14 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f5f5f5;
         }
         .container {
-            border: 1px solid #ccc;
+            background-color: white;
+            border: 1px solid #ddd;
             padding: 20px;
             border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .form-group {
             margin-bottom: 15px;
@@ -24,9 +27,20 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
         .btn:hover {
             background-color: #45a049;
+        }
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -43,6 +57,7 @@
     </div>
 
     <script>
+        // Function to replace owner information
         function replaceOwnerInJson(data) {
             if (typeof data === "object" && data !== null) {
                 if (Array.isArray(data)) {
@@ -61,6 +76,7 @@
             }
         }
 
+        // Function to add missing type in equipments
         function addMissingTypeInEquipments(data) {
             if (typeof data === "object" && data !== null) {
                 if (Array.isArray(data)) {
@@ -82,45 +98,91 @@
             }
         }
 
-        function setStandardWireSizes(data) {
+        // Function to set default pole data and wire specifications
+        function setDefaultPoleData(data) {
             if (typeof data === "object" && data !== null) {
                 if (Array.isArray(data)) {
-                    data.forEach(item => setStandardWireSizes(item));
+                    data.forEach(item => setDefaultPoleData(item));
                 } else {
-                    // Process wires
+                    // Set default pole data
+                    if (data.pole) {
+                        if (!data.pole.clientItem) {
+                            data.pole.clientItem = {};
+                        }
+
+                        // Set default species
+                        data.pole.clientItem.species = "Southern Pine";
+
+                        // Set default class and height based on pole height
+                        if (data.pole.agl) {
+                            const heightInFeet = data.pole.agl.value / 12;
+                            if (heightInFeet >= 28 && heightInFeet <= 32) {
+                                data.pole.clientItem.classOfPole = "4";
+                                data.pole.clientItem.height = {
+                                    unit: "FOOT",
+                                    value: 35
+                                };
+                            } else if (heightInFeet >= 34 && heightInFeet <= 39) {
+                                data.pole.clientItem.classOfPole = "2";
+                                data.pole.clientItem.height = {
+                                    unit: "FOOT",
+                                    value: 45
+                                };
+                            } else {
+                                data.pole.clientItem.classOfPole = "4";
+                                data.pole.clientItem.height = {
+                                    unit: "FOOT",
+                                    value: 40
+                                };
+                            }
+                        }
+
+                        // Add pole tags
+                        if (!data.pole.pole_tags) {
+                            data.pole.pole_tags = ["WOOD"];
+                        }
+                    }
+
+                    // Set wire specifications
                     if (data.wires) {
                         data.wires.forEach(wire => {
+                            if (!wire.clientItem) {
+                                wire.clientItem = {};
+                            }
+                            
                             if (wire.owner) {
                                 switch(wire.owner.id) {
                                     case "PNM":
-                                        switch(wire.clientItem?.type) {
-                                            case "PRIMARY":
-                                            case "NEUTRAL":
-                                            case "OPEN_SECONDARY":
-                                                wire.clientItem.size = "2 ACSR";
-                                                break;
-                                            case "SERVICE":
-                                                wire.clientItem.size = "2 Triplex (Service) (7/1)";
-                                                break;
+                                        if (!wire.clientItem.wireSpec) {
+                                            switch(wire.clientItem.type) {
+                                                case "PRIMARY":
+                                                case "NEUTRAL":
+                                                case "OPEN_SECONDARY":
+                                                    wire.clientItem.wireSpec = "2 ACSR";
+                                                    break;
+                                                case "SERVICE":
+                                                    wire.clientItem.wireSpec = "2 Triplex (Service) (7/1)";
+                                                    break;
+                                                default:
+                                                    wire.clientItem.wireSpec = "2 ACSR";
+                                            }
                                         }
                                         break;
                                     case "GigaPower":
-                                        if (wire.clientItem?.type === "FIBER") {
-                                            wire.clientItem.size = "6M EHS (7/0)";
-                                        }
+                                        wire.clientItem.wireSpec = "6M EHS (7/0)";
                                         break;
                                     case "COMCAST":
-                                        if (wire.clientItem?.type === "CATV") {
-                                            wire.clientItem.size = "1/4\" EHS (7/0)";
-                                        } else if (wire.clientItem?.type === "SERVICE") {
-                                            wire.clientItem.size = "Slacked Tension .25\" CATV Service (1/0)";
+                                        if (wire.clientItem.type === "CATV") {
+                                            wire.clientItem.wireSpec = "1/4\" EHS (7/0)";
+                                        } else if (wire.clientItem.type === "SERVICE") {
+                                            wire.clientItem.wireSpec = "Slacked Tension .25\" CATV Service (1/0)";
                                         }
                                         break;
                                     case "Centurylink / Brightspeed":
-                                        if (wire.clientItem?.type === "TELCO") {
-                                            wire.clientItem.size = "10M EHS (7/0)";
-                                        } else if (wire.clientItem?.type === "SERVICE") {
-                                            wire.clientItem.size = "Slacked Tension .25\" Telco Service (1/0)";
+                                        if (wire.clientItem.type === "TELCO") {
+                                            wire.clientItem.wireSpec = "10M EHS (7/0)";
+                                        } else if (wire.clientItem.type === "SERVICE") {
+                                            wire.clientItem.wireSpec = "Slacked Tension .25\" Telco Service (1/0)";
                                         }
                                         break;
                                 }
@@ -128,38 +190,27 @@
                         });
                     }
 
-                    // Process poles
-                    if (data.pole && data.pole.agl) {
-                        const heightInFeet = data.pole.agl.value / 12;
-                        if (heightInFeet >= 28 && heightInFeet <= 32) {
-                            data.pole.clientItem = {
-                                species: "Southern Pine",
-                                classOfPole: "4",
-                                height: {
-                                    unit: "FOOT",
-                                    value: 35
-                                }
-                            };
-                        } else if (heightInFeet >= 34 && heightInFeet <= 39) {
-                            data.pole.clientItem = {
-                                species: "Southern Pine",
-                                classOfPole: "2",
-                                height: {
-                                    unit: "FOOT",
-                                    value: 45
-                                }
-                            };
-                        }
+                    // Set default equipment bearing
+                    if (data.equipments) {
+                        data.equipments.forEach(equipment => {
+                            if (!equipment.bearing) {
+                                equipment.bearing = {
+                                    unit: "DEGREE",
+                                    value: 0
+                                };
+                            }
+                        });
                     }
 
-                    // Recursively process nested objects
+                    // Process nested objects
                     for (const key in data) {
-                        setStandardWireSizes(data[key]);
+                        setDefaultPoleData(data[key]);
                     }
                 }
             }
         }
 
+        // Form submission handler
         const form = document.getElementById('jsonForm');
         const fileInput = document.getElementById('fileInput');
 
@@ -180,7 +231,7 @@
                     // Apply all transformations
                     replaceOwnerInJson(data);
                     addMissingTypeInEquipments(data);
-                    setStandardWireSizes(data);
+                    setDefaultPoleData(data);
 
                     // Create download for processed file
                     const processedJson = JSON.stringify(data, null, 2);
