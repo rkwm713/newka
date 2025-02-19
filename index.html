@@ -1,471 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON Processor</title>
-  <!-- Import Saira font from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Saira', 'Neuton';
-      background: url('static/images/bg.svg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-    }
-    .container {
-      background-color: #fcfcfc;
-      border-radius: 50px;
-      padding: 50px;
-      padding-bottom: 25px;
-      padding-top: 30px;
-      text-align: center;
-      max-width: 480px;
-      width: 100%;
-      animation: fadeIn 0.6s ease-out;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    h1 {
-      font-size: 28px;
-      font-weight: 600;
-      color: #04458D;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      margin: 0;
-      padding: 0;
-    }
-    p {
-      font-size: 16px;
-      color: #666;
-      margin-bottom: 32px;
-      line-height: 1.5;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .file-input-container {
-      position: relative;
-      background-color: #D9E8F7;
-      border: 2px dashed #4E525B;
-      border-radius: 12px;
-      padding: 24px;
-      transition: all 0.3s ease;
-    }
-    .file-input-container.drag-over {
-      border-color: #FFFF00;
-      background-color: #6cee93;
-      border: 2px double #0A3251;
-    }
-    .file-input-container.file-dropped {
-      border-color: #0A3251;
-      background-color: #6cee93;
-      border: 2px double #0A3251;
-    }
-    input[type="file"] {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
-    }
-    .file-input-label {
-      font-size: 15px;
-      color: #4E525B;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-    .file-input-label::before {
-      content: '📎';
-      font-size: 24px;
-    }
-    button {
-      background: linear-gradient(135deg, #04458D 0%, #0A3251 100%);
-      color: white;
-      padding: 16px 24px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-    }
-    button:hover {
-      background: linear-gradient(135deg, #FFFF00 50px, #FFFF00 50px);
-      transform: translateY(-5px);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
-      color: #04458D;
-    }
-    button:active {
-      transform: translateY(0);
-    }
-    .footer {
-      margin-top: 45px;
-      text-align: center;
-    }
-    .footer-logo {
-      width: 200px;
-      height: auto;
-      padding-bottom: 3px;
-      padding-top: 1px;
-    }
-    @media (max-width: 480px) {
-      .container {
-        padding: 24px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+    <title>Katapult Job Processor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Upload File</h1>
-    <p>Select a .json file to process</p>
-    <form id="upload-form">
-      <div class="file-input-container" id="file-input-container">
-        <input type="file" name="file" accept=".json" required id="file-input">
-        <div class="file-input-label">
-          <span>Choose a file or drag it here</span>
-          <span style="font-size: 13px">Supports .json files</span>
-        </div>
-      </div>
-      <button type="submit">Process File</button>
-    </form>
-    <div class="footer">
-      <img src="static/images/bot.png" alt="Company Logo" class="footer-logo">
+    <div class="container">
+        <h2>Katapult Job Processor</h2>
+        <form id="jsonForm">
+            <div class="form-group">
+                <label for="fileInput">Select Katapult Export JSON File:</label>
+                <input type="file" id="fileInput" accept=".json" required>
+            </div>
+            <button type="submit" class="btn">Process File</button>
+        </form>
     </div>
-  </div>
 
-  <!-- Existing JavaScript block from your original index (4).html -->
-  <script>
-    // Function to replace owner values in the JSON data
-    function replaceOwnerInJson(data) {
-      if (typeof data === "object" && data !== null) {
-        if (Array.isArray(data)) {
-          data.forEach(item => replaceOwnerInJson(item));
-        } else {
-          for (const key in data) {
-            if (key === "owner" && typeof data[key] === "object" && data[key] !== null) {
-              if (data[key].id === "Unset Com Owner" && data[key].industry === "COMMUNICATION") {
-                data[key].id = "PNM";
-                data[key].industry = "UTILITY";
-              }
-            } else {
-              replaceOwnerInJson(data[key]);
-            }
-          }
-        }
-      }
-    }
-
-    // Function to add missing 'type' field in equipments
-    function addMissingTypeInEquipments(data) {
-      if (typeof data === "object" && data !== null) {
-        if (Array.isArray(data)) {
-          data.forEach(item => addMissingTypeInEquipments(item));
-        } else {
-          for (const key in data) {
-            if (key === "equipments" && Array.isArray(data[key])) {
-              data[key].forEach(equipment => {
-                if ("clientItem" in equipment && typeof equipment.clientItem === "object" && equipment.clientItem !== null) {
-                  if (!("type" in equipment.clientItem)) {
-                    equipment.clientItem.type = "UNKNOWN";
-                  }
+    <script>
+        function replaceOwnerInJson(data) {
+            if (typeof data === "object" && data !== null) {
+                if (Array.isArray(data)) {
+                    data.forEach(item => replaceOwnerInJson(item));
+                } else {
+                    if (data.owner) {
+                        if (data.owner.id === "Unset Com Owner" && data.owner.industry === "COMMUNICATION") {
+                            data.owner.id = "PNM";
+                            data.owner.industry = "UTILITY";
+                        }
+                    }
+                    for (const key in data) {
+                        replaceOwnerInJson(data[key]);
+                    }
                 }
-              });
-            } else {
-              addMissingTypeInEquipments(data[key]);
             }
-          }
-        }
-      }
-    }
-
-    // Handle drag & drop UI effects
-    const fileInputContainer = document.getElementById('file-input-container');
-    const fileInput = document.getElementById('file-input');
-    const form = document.getElementById('upload-form');
-
-    fileInputContainer.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      fileInputContainer.classList.add('drag-over');
-    });
-    fileInputContainer.addEventListener('dragleave', () => {
-      fileInputContainer.classList.remove('drag-over');
-    });
-    fileInputContainer.addEventListener('drop', (e) => {
-      e.preventDefault();
-      fileInputContainer.classList.remove('drag-over');
-      fileInputContainer.classList.add('file-dropped');
-      if (e.dataTransfer.files.length) {
-        fileInput.files = e.dataTransfer.files;
-      }
-    });
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length > 0) {
-        fileInputContainer.classList.add('file-dropped');
-      }
-    });
-
-    // Process the JSON file on form submission
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (!fileInput.files.length) {
-        alert("Please choose a file");
-        return;
-      }
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        try {
-          const data = JSON.parse(event.target.result);
-          replaceOwnerInJson(data);
-          addMissingTypeInEquipments(data);
-
-          // If you want to call the new importKatapultJob() function or anything else,
-          // you could do so here. Example:
-          // const mergedData = importKatapultJob(data);
-
-          const processedJson = JSON.stringify(data, null, 4);
-          const blob = new Blob([processedJson], { type: "application/json" });
-          const url = URL.createObjectURL(blob);
-          // Create a temporary link to trigger download
-          const downloadLink = document.createElement('a');
-          downloadLink.href = url;
-          downloadLink.download = "processed_" + file.name;
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-          // Optionally revoke the object URL after a short delay
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
-        } catch(error) {
-          alert("Error processing JSON: " + error.message);
-        }
-      };
-      reader.readAsText(file);
-    });
-  </script>
-
-  <!-- Newly added JavaScript block with your validation and import functions -->
-  <script>
-    // -----------------------
-    // MERGED VALIDATION CODE
-    // -----------------------
-
-    // 1) validateAndDefaultWireSize
-    function validateAndDefaultWireSize(wire, owner) {
-      // If wire size is missing or invalid, apply defaults based on usage and owner
-      if (!wire.size || wire.size === '') {
-        const usageGroup = wire.usageGroups?.[0];
-        switch(usageGroup) {
-          case 'PRIMARY':
-          case 'NEUTRAL':
-          case 'OPEN_WIRE':
-          case 'SECONDARY':
-            return owner === 'PNM' ? '2 ACSR' : wire.size;
-
-          case 'UTILITY_SERVICE':
-            return owner === 'PNM' ? '2 Triplex (Service)' : wire.size;
-
-          case 'COMMUNICATION':
-            if (owner === 'GigaPower') return '6M EHS';
-            if (owner === 'Comcast') return '1/4" EHS';
-            if (owner === 'CenturyLink' || owner === 'Brightspeed') return '10M EHS';
-            return wire.size;
-
-          case 'COMMUNICATION_SERVICE':
-            if (owner === 'Comcast') return '.25" CATV Service';
-            if (owner === 'CenturyLink' || owner === 'Brightspeed') return '.25" TELCO Service';
-            return wire.size;
-
-          default:
-            return wire.size;
-        }
-      }
-      return wire.size;
-    }
-
-    // 2) validateAndFixConnections
-    function validateAndFixConnections(structure) {
-      // Handle missing or invalid connection locations
-      if (!structure.connections || !Array.isArray(structure.connections)) {
-        structure.connections = [];
-      }
-
-      structure.connections.forEach(connection => {
-        // Fix missing heights by using standard attachment heights
-        if (!connection.height || connection.height < 0) {
-          connection.height = getDefaultAttachmentHeight(connection.type, connection.owner);
         }
 
-        // Ensure proper nesting of components
-        if (!connection.component) {
-          connection.component = {
-            type: connection.type || 'Wire',
-            owner: connection.owner,
-            size: validateAndDefaultWireSize(connection, connection.owner)
-          };
+        function addMissingTypeInEquipments(data) {
+            if (typeof data === "object" && data !== null) {
+                if (Array.isArray(data)) {
+                    data.forEach(item => addMissingTypeInEquipments(item));
+                } else {
+                    if (data.equipments) {
+                        data.equipments.forEach(equipment => {
+                            if ("clientItem" in equipment && typeof equipment.clientItem === "object" && equipment.clientItem !== null) {
+                                if (!("type" in equipment.clientItem)) {
+                                    equipment.clientItem.type = "UNKNOWN";
+                                }
+                            }
+                        });
+                    }
+                    for (const key in data) {
+                        addMissingTypeInEquipments(data[key]);
+                    }
+                }
+            }
         }
-      });
 
-      return structure;
-    }
+        function setStandardWireSizes(data) {
+            if (typeof data === "object" && data !== null) {
+                if (Array.isArray(data)) {
+                    data.forEach(item => setStandardWireSizes(item));
+                } else {
+                    // Process wires
+                    if (data.wires) {
+                        data.wires.forEach(wire => {
+                            if (wire.owner) {
+                                switch(wire.owner.id) {
+                                    case "PNM":
+                                        switch(wire.clientItem?.type) {
+                                            case "PRIMARY":
+                                            case "NEUTRAL":
+                                            case "OPEN_SECONDARY":
+                                                wire.clientItem.size = "2 ACSR";
+                                                break;
+                                            case "SERVICE":
+                                                wire.clientItem.size = "2 Triplex (Service) (7/1)";
+                                                break;
+                                        }
+                                        break;
+                                    case "GigaPower":
+                                        if (wire.clientItem?.type === "FIBER") {
+                                            wire.clientItem.size = "6M EHS (7/0)";
+                                        }
+                                        break;
+                                    case "COMCAST":
+                                        if (wire.clientItem?.type === "CATV") {
+                                            wire.clientItem.size = "1/4\" EHS (7/0)";
+                                        } else if (wire.clientItem?.type === "SERVICE") {
+                                            wire.clientItem.size = "Slacked Tension .25\" CATV Service (1/0)";
+                                        }
+                                        break;
+                                    case "Centurylink / Brightspeed":
+                                        if (wire.clientItem?.type === "TELCO") {
+                                            wire.clientItem.size = "10M EHS (7/0)";
+                                        } else if (wire.clientItem?.type === "SERVICE") {
+                                            wire.clientItem.size = "Slacked Tension .25\" Telco Service (1/0)";
+                                        }
+                                        break;
+                                }
+                            }
+                        });
+                    }
 
-    function getDefaultAttachmentHeight(type, owner) {
-      // Default attachment heights based on standard practice
-      switch(owner) {
-        case 'PNM':
-          return type === 'UTILITY_SERVICE' ? 18 : 22; // feet
-        case 'Comcast':
-        case 'CenturyLink':
-        case 'Brightspeed':
-          return type === 'COMMUNICATION_SERVICE' ? 16 : 17; // feet
-        case 'GigaPower':
-          return 18; // feet
-        default:
-          return 16; // feet
-      }
-    }
+                    // Process poles
+                    if (data.pole && data.pole.agl) {
+                        const heightInFeet = data.pole.agl.value / 12;
+                        if (heightInFeet >= 28 && heightInFeet <= 32) {
+                            data.pole.clientItem = {
+                                species: "Southern Pine",
+                                classOfPole: "4",
+                                height: {
+                                    unit: "FOOT",
+                                    value: 35
+                                }
+                            };
+                        } else if (heightInFeet >= 34 && heightInFeet <= 39) {
+                            data.pole.clientItem = {
+                                species: "Southern Pine",
+                                classOfPole: "2",
+                                height: {
+                                    unit: "FOOT",
+                                    value: 45
+                                }
+                            };
+                        }
+                    }
 
-    // 3) validateStructure
-    function validateStructure(structure) {
-      // Ensure required fields exist
-      if (!structure.pole) {
-        structure.pole = {
-          species: 'Douglas Fir',
-          class: '4',
-          height: 35 // Default to 35ft class 4
-        };
-      }
-
-      // Validate and fix connections
-      structure = validateAndFixConnections(structure);
-
-      // Ensure proper wire references
-      structure.wires = structure.wires || [];
-      structure.wires.forEach(wire => {
-        wire.size = validateAndDefaultWireSize(wire, wire.owner);
-
-        // Ensure proper tension group assignment
-        if (!wire.tensionGroup) {
-          wire.tensionGroup = getTensionGroup(wire.usageGroups?.[0], wire.owner);
+                    // Recursively process nested objects
+                    for (const key in data) {
+                        setStandardWireSizes(data[key]);
+                    }
+                }
+            }
         }
-      });
 
-      return structure;
-    }
+        const form = document.getElementById('jsonForm');
+        const fileInput = document.getElementById('fileInput');
 
-    function getTensionGroup(usageGroup, owner) {
-      // Assign appropriate tension groups based on usage and owner
-      if (usageGroup?.includes('SERVICE')) {
-        return 'Slack';
-      } else if (usageGroup?.includes('COMMUNICATION')) {
-        return owner === 'GigaPower' ? 'Full' : 'Quarter';
-      }
-      return 'Full';
-    }
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!fileInput.files.length) {
+                alert("Please choose a file");
+                return;
+            }
 
-    // 4) importKatapultJob
-    function importKatapultJob(katapultData) {
-      try {
-        // Validate and fix each structure in the job
-        const structures = katapultData.structures.map(structure => {
-          return validateStructure(structure);
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    
+                    // Apply all transformations
+                    replaceOwnerInJson(data);
+                    addMissingTypeInEquipments(data);
+                    setStandardWireSizes(data);
+
+                    // Create download for processed file
+                    const processedJson = JSON.stringify(data, null, 2);
+                    const blob = new Blob([processedJson], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = url;
+                    downloadLink.download = "processed_" + file.name;
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                } catch(error) {
+                    alert("Error processing JSON: " + error.message);
+                }
+            };
+
+            reader.readAsText(file);
         });
-
-        // Ensure proper structure connectivity
-        for (let i = 0; i < structures.length - 1; i++) {
-          const currentStructure = structures[i];
-          const nextStructure = structures[i + 1];
-
-          // Connect adjacent structures if missing connections
-          if (!hasValidConnection(currentStructure, nextStructure)) {
-            createConnectionBetweenStructures(currentStructure, nextStructure);
-          }
-        }
-
-        return {
-          ...katapultData,
-          structures: structures
-        };
-      } catch (error) {
-        console.error('Error importing Katapult job:', error);
-        throw error;
-      }
-    }
-
-    // Helper functions for importKatapultJob
-    function hasValidConnection(structA, structB) {
-      // Implement your logic here to check if structures are connected properly
-      // For example, look through structA.connections and see if there's a link to structB
-      // Return a boolean
-      return false;
-    }
-
-    function createConnectionBetweenStructures(structA, structB) {
-      // Implement your logic to create a connection between two structures
-      // E.g., push a connection object into structA.connections and structB.connections
-      if (!structA.connections) {
-        structA.connections = [];
-      }
-      if (!structB.connections) {
-        structB.connections = [];
-      }
-      structA.connections.push({
-        type: "Wire",
-        owner: "PNM",
-        height: getDefaultAttachmentHeight("UTILITY_SERVICE", "PNM"),
-        component: {
-          type: "Wire",
-          owner: "PNM",
-          size: "2 ACSR"
-        },
-        connectedTo: structB // or some reference ID
-      });
-      structB.connections.push({
-        type: "Wire",
-        owner: "PNM",
-        height: getDefaultAttachmentHeight("UTILITY_SERVICE", "PNM"),
-        component: {
-          type: "Wire",
-          owner: "PNM",
-          size: "2 ACSR"
-        },
-        connectedTo: structA // or some reference ID
-      });
-    }
-  </script>
+    </script>
 </body>
 </html>
