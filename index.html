@@ -242,7 +242,8 @@
                             };
 
                             // Add primary and neutral wires
-                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
+                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE" || endPoint.type === "OTHER_POLE") {
+                                // Add primary conductors
                                 endPoint.wires.push({
                                     owner: {
                                         id: "PNM",
@@ -256,6 +257,7 @@
                                     }
                                 });
 
+                                // Add neutral conductor
                                 endPoint.wires.push({
                                     owner: {
                                         id: "PNM",
@@ -268,53 +270,79 @@
                                         tensionGroups: wireTypes.NEUTRAL.tension.groups
                                     }
                                 });
+
+                                // Add secondary if present
+                                if (data.insulators?.some(ins => ins.clientItem?.type?.includes("Secondary"))) {
+                                    endPoint.wires.push({
+                                        owner: {
+                                            id: "PNM",
+                                            industry: "UTILITY"
+                                        },
+                                        clientItem: {
+                                            type: "SECONDARY",
+                                            wireSpec: wireTypes.SECONDARY.spec,
+                                            usage: wireTypes.SECONDARY.usage,
+                                            tensionGroups: wireTypes.SECONDARY.tension.groups
+                                        }
+                                    });
+                                }
                             }
 
                             // Add communication wires
                             if (data.insulators) {
                                 data.insulators.forEach(insulator => {
-                                    if (insulator.clientItem.type.includes("Comms")) {
-                                        let wireSpec;
-                                        let usage;
+                                    if (insulator.clientItem?.type?.includes("Comms")) {
+                                        let wireType;
                                         
+                                        // Determine wire type based on owner and service type
                                         switch(insulator.owner?.id) {
                                             case "UPN/TW":
                                             case "MCI WORLDCOM":
+                                            case "Zayo":
+                                            case "GigaPower":
+                                                wireType = wireTypes.COMMUNICATION.FIBER;
+                                                break;
                                             case "COMCAST":
+                                                if (insulator.clientItem.type.includes("CATV")) {
+                                                    wireType = wireTypes.COMMUNICATION.CATV;
+                                                } else if (insulator.clientItem.type.includes("Drop")) {
+                                                    wireType = wireTypes.COMMUNICATION.CATV;
+                                                } else {
+                                                    wireType = wireTypes.COMMUNICATION.FIBER;
+                                                }
+                                                break;
                                             case "Centurylink / Brightspeed":
-                                                wireSpec = wireTypes.COMMUNICATION.FIBER.spec;
-                                                usage = wireTypes.COMMUNICATION.FIBER.usage;
+                                                if (insulator.clientItem.type.includes("Telco")) {
+                                                    wireType = wireTypes.COMMUNICATION.TELCO;
+                                                } else if (insulator.clientItem.type.includes("Drop")) {
+                                                    wireType = wireTypes.COMMUNICATION.TELCO;
+                                                } else {
+                                                    wireType = wireTypes.COMMUNICATION.FIBER;
+                                                }
                                                 break;
                                             default:
-                                                wireSpec = wireTypes.COMMUNICATION.TELCO.spec;
-                                                usage = wireTypes.COMMUNICATION.TELCO.usage;
+                                                wireType = wireTypes.COMMUNICATION.TELCO;
                                         }
 
                                         if (!insulator.wires) {
                                             insulator.wires = [];
                                         }
 
-                                        insulator.wires.push({
+                                        const wireConfig = {
                                             owner: insulator.owner,
                                             clientItem: {
                                                 type: "COMMUNICATION",
-                                                wireSpec: wireSpec,
-                                                usage: usage,
-                                                tensionGroups: wireTypes.COMMUNICATION.FIBER.tension.groups
+                                                wireSpec: wireType.spec,
+                                                usage: wireType.usage,
+                                                tensionGroups: wireType.tension.groups
                                             }
-                                        });
+                                        };
+
+                                        insulator.wires.push(wireConfig);
 
                                         // Add wire to endpoint if it has a connection
-                                        if (endPoint.connectionId) {
-                                            endPoint.wires.push({
-                                                owner: insulator.owner,
-                                                clientItem: {
-                                                    type: "COMMUNICATION",
-                                                    wireSpec: wireSpec,
-                                                    usage: usage,
-                                                    tensionGroups: wireTypes.COMMUNICATION.FIBER.tension.groups
-                                                }
-                                            });
+                                        if (endPoint.connectionId && endPoint.type !== "OTHER_POLE") {
+                                            endPoint.wires.push(wireConfig);
                                         }
                                     }
                                 });
