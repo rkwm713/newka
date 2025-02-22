@@ -1,0 +1,4 @@
+Size	"Outer Diameter ("")"	"Wall Thickness ("")"	Modulus of Elasticity (lb/iný)	Density (lb/ft?)	"Shortest Length ("")"	Shortest Length Capacity (lbf)	"Longest Length ("")"	Longest Length Capacity (lbf)
+"2"" Schedule 40"	2.375	0.154	29000000	490	36	35054	180	5854
+"2.5"" Schedule 40"	2.875	0.203	29000000	490	36	56871	180	13468
+"3"" Schedule 40"	3.5	0.216	29000000	490	36	75752	180	26508

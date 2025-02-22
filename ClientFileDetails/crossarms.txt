@@ -1,0 +1,16 @@
+Size	"Length ("")"	"Width ("")"	"Height ("")"	Maximum Allowable Stress (lb/iný)	Poisson's Ratio	Modulus of Elasticity (lb/iný)	Density (lb/ft?)	"Wall Thickness ("")"	Double Arm	Shape	Material	"Bolt Hole Diameter (/16"")"
+Communication Arm	36	2	2	65000	0.3	29000000	490	0.187	false	SQUARE	METAL	None
+Fiberglass 10 ft Crossarm Deadend	120	3.75	5.75	98700	0.3	5400000	61.8	SOLID	false	SQUARE	POLYMER	None
+Fiberglass 10 ft Crossarm Tangent	120	3.75	5.75	52900	0.3	3500000	42.1	SOLID	false	SQUARE	POLYMER	None
+"Fiberglass 18 inch Crossarm (1.5"" round)"	18	1.5	1.5	26200	0.3	3500000	56.7	SOLID	false	SQUARE	POLYMER	None
+"Fiberglass 4 ft Crossarm (3.5"" round)"	48	3.5	3.5	26200	0.3	3500000	56.7	SOLID	false	SQUARE	POLYMER	None
+"Fiberglass 4 ft Crossarm (4"" wide)"	48	4	2	26200	0.3	3500000	56.7	SOLID	false	SQUARE	POLYMER	None
+Fiberglass 8 ft Crossarm Deadend	96	3.75	5.75	84300	0.3	5400000	67.6	SOLID	false	SQUARE	POLYMER	None
+Fiberglass 8 ft Crossarm Tangent	96	3.75	5.75	48000	0.3	3500000	45.1	SOLID	false	SQUARE	POLYMER	None
+Steel 4 ft Crossarm	48	4	3	65000	0.3	29000000	490	0.187	false	SQUARE	METAL	None
+"Wood 10 Ft Crossarm - 3.75"" X 5.75"""	120	3.75	5.75	8000	0.3	2500000	40	SOLID	false	SQUARE	WOOD	11
+"Wood 10 Ft Double Crossarm - 3.75"" X 5.75"""	120	3.75	5.75	16000	0.3	2500000	40	SOLID	true	SQUARE	WOOD	11
+"Wood 8 Ft Crossarm - 3.5"" X 4.5"""	96	3.5	4.5	8000	0.3	2500000	40	SOLID	false	SQUARE	WOOD	11
+"Wood 8 Ft Crossarm - 3.75"" X 5.75"""	96	3.75	5.75	8000	0.3	2500000	40	SOLID	false	SQUARE	WOOD	11
+"Wood 8 Ft Double Crossarm - 3.5"" X 4.5"""	96	3.5	4.5	12000	0.3	2500000	40	SOLID	true	SQUARE	WOOD	11
+"Wood 8 Ft Triple Crossarm - 3.5"" X 4.5"""	96	3.5	4.5	16000	0.3	2500000	40	SOLID	true	SQUARE	WOOD	11

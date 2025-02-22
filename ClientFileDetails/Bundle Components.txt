@@ -1,0 +1,56 @@
+Size	Abbreviation	Groups	"Diameter ("")"	Weight per Length (lbf/ft)	Description
+.500coax	0.5	Comcast Coax	0.5	0.103	.500coax
+.625coax	0.625	Comcast Coax	0.625	0.163	.625coax
+.750coax	0.75	Comcast Coax	0.75	0.217	.750coax
+.875coax	0.875	Comcast Coax	0.875	0.283	.875coax
+1.00coax	1	Comcast Coax	1	0.405	1.00coax
+100PR Copper	100PR	CTL Copper	0.91	0.6005	100PR Copper
+12ct (GIG)	12ct GIG	Gigapower Fiber	0.12	0.02	12ct GIG
+144ct	144ct	Historical/Unk Fiber	0.85	0.251	144ct
+144ct (Con)	144ct (Con)	Conterra Fiber	0.63	0.105	144ct (Con)
+144ct (EZE)	144ct (EZE)	Ezee Fiber	0.7	0.178	144ct (EZE)
+144ct (GIG)	144ct GIG	Gigapower Fiber	0.44	0.084	144ct GIG
+144ct (UPN)	144ct (UPN)	UPN Fiber	0.62	0.109	144ct (UPN)
+144ct (Vex)	144ct (Vex)	Vexus Fiber	0.75	0.193	144ct (Vex)
+144ct (VZW)	144ct (VZW)	Verizon Fiber	0.51	0.088	144ct (VZW)
+200PR Copper	200PR	CTL Copper	1.2	1.0875	200PR Copper
+24ct	24ct	Historical/Unk Fiber	0.41	0.073	24ct
+24ct (EZE)	24ct (EZE)	Ezee Fiber	0.496	0.045	24ct (EZE)
+24ct (GIG)	24ct GIG	Gigapower Fiber	0.41	0.056	24ct GIG
+24ct (UPN)	24ct (UPN)	UPN Fiber	0.4	0.0426	24ct (UPN)
+24ct (Vex)	24ct (Vex)	Vexus Fiber	0.48	0.091	24ct (Vex)
+24ct (VZW)	24ct (VZW)	Verizon Fiber	0.41	0.073	24ct (VZW)
+25PR Copper	25PR	CTL Copper	0.57	0.237	25PR Copper
+288ct	288ct	Historical/Unk Fiber	0.94	0.283	288ct
+288ct (EZE)	288ct (EZE)	Ezee Fiber	0.795	0.184	288ct (EZE)
+288ct (GIG)	288ct GIG	Gigapower Fiber	0.58	0.089	288ct GIG
+288ct (UPN)	288ct (UPN)	UPN Fiber	0.72	0.131	288ct (UPN)
+288ct (Vex)	288ct (Vex)	Vexus Fiber	0.85	0.236	288ct (Vex)
+288ct (VZW)	288ct (VZW)	Verizon Fiber	0.78	0.173	288ct (VZW)
+300PR Copper	300PR	CTL Copper	1.4	1.506	300PR Copper
+400PR Copper	400PR	CTL Copper	1.6	1.973	400PR Copper
+432ct	432ct	Historical/Unk Fiber	0.97	0.311	432ct
+432ct (GIG)	432ct GIG	Gigapower Fiber	0.62	0.104	432ct GIG
+432ct (UPN)	432ct (UPN)	UPN Fiber	0.83	0.162	432ct (UPN)
+432ct (VZW)	432ct (VZW)	Verizon Fiber	0.78	0.173	432ct (VZW)
+48ct	48ct	Historical/Unk Fiber	0.53	0.089	48ct
+48ct (CTL)	48ct (CTL)	CTL Fiber	0.65	0.147	48ct (CTL)
+48ct (EZE)	48ct (EZE)	Ezee Fiber	0.496	0.094	48ct (EZE)
+48ct (GIG)	48ct GIG	Gigapower Fiber	0.41	0.057	48ct GIG
+48ct (UPN)	48ct (UPN)	UPN Fiber	0.4	0.0437	48ct (UPN)
+48ct (Vex)	48ct (Vex)	Vexus Fiber	0.48	0.091	48ct (Vex)
+48ct (VZW)	48ct (VZW)	Verizon Fiber	0.41	0.073	48ct (VZW)
+50PR Copper	50PR	CTL Copper	0.74	0.372	50PR Copper
+600PR Copper	600PR	CTL Copper	1.9	2.88	600PR Copper
+72ct	72ct	Historical/Unk Fiber	0.64	0.155	72ct
+72ct (CTL)	72ct (CTL)	CTL Fiber	0.68	0.166	72ct (CTL)
+72ct (GIG)	72ct GIG	Gigapower Fiber	0.44	0.067	72ct GIG
+72ct (UPN)	72ct (UPN)	UPN Fiber	0.4	0.0448	72ct (UPN)
+72ct (VZW)	72ct (VZW)	Verizon Fiber	0.44	0.076	72ct (VZW)
+864ct	864ct	Historical/Unk Fiber	1.17	0.415	864ct
+864ct (GIG)	864ct GIG	Gigapower Fiber	0.92	0.244	864ct GIG
+864ct (VZW)	864ct (VZW)	Verizon Fiber	0.96	0.284	864ct (VZW)
+96ct	96ct	Historical/Unk Fiber	0.71	0.181	96ct
+96ct (EZE)	96ct (EZE)	Ezee Fiber	0.562	0.107	96ct (EZE)
+96ct (UPN)	96ct (UPN)	UPN Fiber	0.48	0.066	96ct (UPN)
+96ct (Vex)	96ct (Vex)	Vexus Fiber	0.85	0.129	96ct (Vex)
