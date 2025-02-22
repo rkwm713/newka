@@ -1,430 +1,277 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Katapult Job Processor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-        input[type="file"] {
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Processor</title>
+  <!-- Import Saira font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Saira', 'Neuton';
+      background: url('static/images/bg.svg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+    .container {
+      background-color: #fcfcfc;
+      border-radius: 50px;
+      padding: 50px;
+      padding-bottom: 25px;
+      padding-top: 30px;
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #04458D;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      margin: 0;
+      padding: 0;
+    }
+    p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .file-input-container {
+      position: relative;
+      background-color: #D9E8F7;
+      border: 2px dashed #4E525B;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+    .file-input-container.drag-over {
+      border-color: #FFFF00;
+      background-color: #6cee93;
+      border: 2px double #0A3251;
+    }
+    .file-input-container.file-dropped {
+      border-color: #0A3251;
+      background-color: #6cee93;
+      border: 2px double #0A3251;
+    }
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-input-label {
+      font-size: 15px;
+      color: #4E525B;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .file-input-label::before {
+      content: '📎';
+      font-size: 24px;
+    }
+    button {
+      background: linear-gradient(135deg, #04458D 0%, #0A3251 100%);
+      color: white;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+    button:hover {
+      background: linear-gradient(135deg, #FFFF00 50px, #FFFF00 50px);
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+      color: #04458D;
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .footer {
+      margin-top: 45px;
+      text-align: center;
+    }
+    .footer-logo {
+      width: 200px;
+      height: auto;
+      padding-bottom: 3px;
+      padding-top: 1px;
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Katapult Job Processor</h2>
-        <form id="jsonForm">
-            <div class="form-group">
-                <label for="fileInput">Select Katapult Export JSON File:</label>
-                <input type="file" id="fileInput" accept=".json" required>
-            </div>
-            <button type="submit" class="btn">Process File</button>
-        </form>
+  <div class="container">
+    <h1>Upload File</h1>
+    <p>Select a .json file to process</p>
+    <!-- The form now has no action since processing is done client side -->
+    <form id="upload-form">
+      <div class="file-input-container" id="file-input-container">
+        <input type="file" name="file" accept=".json" required id="file-input">
+        <div class="file-input-label">
+          <span>Choose a file or drag it here</span>
+          <span style="font-size: 13px">Supports .json files</span>
+        </div>
+      </div>
+      <button type="submit">Process File</button>
+    </form>
+    <div class="footer">
+      <!-- Change the src path to your static image location -->
+      <img src="static/images/bot.png" alt="Company Logo" class="footer-logo">
     </div>
+  </div>
 
-    <script>
-        // Function to replace owner information
-        function replaceOwnerInJson(data) {
-            if (typeof data === "object" && data !== null) {
-                if (Array.isArray(data)) {
-                    data.forEach(item => replaceOwnerInJson(item));
-                } else {
-                    if (data.owner) {
-                        if (data.owner.id === "Unset Com Owner" && data.owner.industry === "COMMUNICATION") {
-                            data.owner.id = "PNM";
-                            data.owner.industry = "UTILITY";
-                        }
-                    }
-                    for (const key in data) {
-                        replaceOwnerInJson(data[key]);
-                    }
-                }
+  <script>
+    // Function to replace owner values in the JSON data
+    function replaceOwnerInJson(data) {
+      if (typeof data === "object" && data !== null) {
+        if (Array.isArray(data)) {
+          data.forEach(item => replaceOwnerInJson(item));
+        } else {
+          for (const key in data) {
+            if (key === "owner" && typeof data[key] === "object" && data[key] !== null) {
+              if (data[key].id === "Unset Com Owner" && data[key].industry === "COMMUNICATION") {
+                data[key].id = "PNM";
+                data[key].industry = "UTILITY";
+              }
+            } else {
+              replaceOwnerInJson(data[key]);
             }
+          }
         }
+      }
+    }
 
-        // Function to add missing type in equipments
-        function addMissingTypeInEquipments(data) {
-            if (typeof data === "object" && data !== null) {
-                if (Array.isArray(data)) {
-                    data.forEach(item => addMissingTypeInEquipments(item));
-                } else {
-                    if (data.equipments) {
-                        data.equipments.forEach(equipment => {
-                            if ("clientItem" in equipment && typeof equipment.clientItem === "object" && equipment.clientItem !== null) {
-                                if (!("type" in equipment.clientItem)) {
-                                    equipment.clientItem.type = "UNKNOWN";
-                                }
-                            }
-                        });
-                    }
-                    for (const key in data) {
-                        addMissingTypeInEquipments(data[key]);
-                    }
+    // Function to add missing 'type' field in equipments
+    function addMissingTypeInEquipments(data) {
+      if (typeof data === "object" && data !== null) {
+        if (Array.isArray(data)) {
+          data.forEach(item => addMissingTypeInEquipments(item));
+        } else {
+          for (const key in data) {
+            if (key === "equipments" && Array.isArray(data[key])) {
+              data[key].forEach(equipment => {
+                if ("clientItem" in equipment && typeof equipment.clientItem === "object" && equipment.clientItem !== null) {
+                  if (!("type" in equipment.clientItem)) {
+                    equipment.clientItem.type = "UNKNOWN";
+                  }
                 }
+              });
+            } else {
+              addMissingTypeInEquipments(data[key]);
             }
+          }
         }
+      }
+    }
 
-        // Function to set default pole data and wire specifications
-        function setDefaultPoleData(data) {
-            if (typeof data === "object" && data !== null) {
-                if (Array.isArray(data)) {
-                    data.forEach(item => setDefaultPoleData(item));
-                } else {
-                    // Set default pole data
-                    if (data.pole) {
-                        if (!data.pole.clientItem) {
-                            data.pole.clientItem = {};
-                        }
+    // Handle drag & drop UI effects
+    const fileInputContainer = document.getElementById('file-input-container');
+    const fileInput = document.getElementById('file-input');
+    const form = document.getElementById('upload-form');
 
-                        // Set default species
-                        data.pole.clientItem.species = "Southern Pine";
+    fileInputContainer.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileInputContainer.classList.add('drag-over');
+    });
+    fileInputContainer.addEventListener('dragleave', () => {
+      fileInputContainer.classList.remove('drag-over');
+    });
+    fileInputContainer.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileInputContainer.classList.remove('drag-over');
+      fileInputContainer.classList.add('file-dropped');
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+      }
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileInputContainer.classList.add('file-dropped');
+      }
+    });
 
-                        // Set default class and height based on pole height
-                        if (data.pole.agl) {
-                            const heightInFeet = data.pole.agl.value / 12;
-                            if (heightInFeet >= 28 && heightInFeet <= 32) {
-                                data.pole.clientItem.classOfPole = "4";
-                                data.pole.clientItem.height = {
-                                    unit: "FOOT",
-                                    value: 35
-                                };
-                            } else if (heightInFeet >= 34 && heightInFeet <= 39) {
-                                data.pole.clientItem.classOfPole = "2";
-                                data.pole.clientItem.height = {
-                                    unit: "FOOT",
-                                    value: 45
-                                };
-                            } else {
-                                data.pole.clientItem.classOfPole = "4";
-                                data.pole.clientItem.height = {
-                                    unit: "FOOT",
-                                    value: 40
-                                };
-                            }
-                        }
-
-                        // Add pole tags
-                        if (!data.pole.pole_tags) {
-                            data.pole.pole_tags = ["WOOD"];
-                        }
-                    }
-
-                    // Set wire specifications and establish connections
-                    if (data.wireEndPoints) {
-                        data.wireEndPoints.forEach(endPoint => {
-                            // Create wire array if it doesn't exist
-                            if (!endPoint.wires) {
-                                endPoint.wires = [];
-                            }
-
-                            // Add wire based on connection type and owner
-                            const wireTypes = {
-                                PRIMARY: {
-                                    spec: "4/0 ACSR - Penguin",
-                                    usage: "PRIMARY",
-                                    tension: {
-                                        groups: [
-                                            {
-                                                distance: { unit: "FOOT", value: 0 },
-                                                tension: { unit: "POUND", value: 1500 }
-                                            }
-                                        ]
-                                    }
-                                },
-                                NEUTRAL: {
-                                    spec: "2/0 ACSR - Quail",
-                                    usage: "NEUTRAL",
-                                    tension: {
-                                        groups: [
-                                            {
-                                                distance: { unit: "FOOT", value: 0 },
-                                                tension: { unit: "POUND", value: 1000 }
-                                            }
-                                        ]
-                                    }
-                                },
-                                SECONDARY: {
-                                    spec: "4/0 Quadruplex (Span)",
-                                    usage: "SECONDARY",
-                                    tension: {
-                                        groups: [
-                                            {
-                                                distance: { unit: "FOOT", value: 0 },
-                                                tension: { unit: "POUND", value: 500 }
-                                            }
-                                        ]
-                                    }
-                                },
-                                SERVICE: {
-                                    spec: "2 Triplex (Service)",
-                                    usage: "UTILITY_SERVICE",
-                                    tension: {
-                                        groups: [
-                                            {
-                                                distance: { unit: "FOOT", value: 0 },
-                                                tension: { unit: "POUND", value: 100 }
-                                            }
-                                        ]
-                                    }
-                                },
-                                COMMUNICATION: {
-                                    FIBER: {
-                                        spec: "144ct SS",
-                                        usage: "COMMUNICATION",
-                                        tension: {
-                                            groups: [
-                                                {
-                                                    distance: { unit: "FOOT", value: 0 },
-                                                    tension: { unit: "POUND", value: 750 }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    CATV: {
-                                        spec: ".625\" CATV Service",
-                                        usage: "COMMUNICATION_SERVICE",
-                                        tension: {
-                                            groups: [
-                                                {
-                                                    distance: { unit: "FOOT", value: 0 },
-                                                    tension: { unit: "POUND", value: 200 }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    TELCO: {
-                                        spec: ".375\" TELCO Service",
-                                        usage: "COMMUNICATION_SERVICE",
-                                        tension: {
-                                            groups: [
-                                                {
-                                                    distance: { unit: "FOOT", value: 0 },
-                                                    tension: { unit: "POUND", value: 150 }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            };
-
-                            // Add primary and neutral wires
-                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE" || endPoint.type === "OTHER_POLE") {
-                                // Add primary conductors
-                                endPoint.wires.push({
-                                    owner: {
-                                        id: "PNM",
-                                        industry: "UTILITY"
-                                    },
-                                    clientItem: {
-                                        type: "PRIMARY",
-                                        wireSpec: wireTypes.PRIMARY.spec,
-                                        usage: wireTypes.PRIMARY.usage,
-                                        tensionGroups: wireTypes.PRIMARY.tension.groups
-                                    }
-                                });
-
-                                // Add neutral conductor
-                                endPoint.wires.push({
-                                    owner: {
-                                        id: "PNM",
-                                        industry: "UTILITY"
-                                    },
-                                    clientItem: {
-                                        type: "NEUTRAL",
-                                        wireSpec: wireTypes.NEUTRAL.spec,
-                                        usage: wireTypes.NEUTRAL.usage,
-                                        tensionGroups: wireTypes.NEUTRAL.tension.groups
-                                    }
-                                });
-
-                                // Add secondary if present
-                                if (data.insulators?.some(ins => ins.clientItem?.type?.includes("Secondary"))) {
-                                    endPoint.wires.push({
-                                        owner: {
-                                            id: "PNM",
-                                            industry: "UTILITY"
-                                        },
-                                        clientItem: {
-                                            type: "SECONDARY",
-                                            wireSpec: wireTypes.SECONDARY.spec,
-                                            usage: wireTypes.SECONDARY.usage,
-                                            tensionGroups: wireTypes.SECONDARY.tension.groups
-                                        }
-                                    });
-                                }
-                            }
-
-                            // Add communication wires
-                            if (data.insulators) {
-                                data.insulators.forEach(insulator => {
-                                    if (insulator.clientItem?.type?.includes("Comms")) {
-                                        let wireType;
-                                        
-                                        // Determine wire type based on owner and service type
-                                        switch(insulator.owner?.id) {
-                                            case "UPN/TW":
-                                            case "MCI WORLDCOM":
-                                            case "Zayo":
-                                            case "GigaPower":
-                                                wireType = wireTypes.COMMUNICATION.FIBER;
-                                                break;
-                                            case "COMCAST":
-                                                if (insulator.clientItem.type.includes("CATV")) {
-                                                    wireType = wireTypes.COMMUNICATION.CATV;
-                                                } else if (insulator.clientItem.type.includes("Drop")) {
-                                                    wireType = wireTypes.COMMUNICATION.CATV;
-                                                } else {
-                                                    wireType = wireTypes.COMMUNICATION.FIBER;
-                                                }
-                                                break;
-                                            case "Centurylink / Brightspeed":
-                                                if (insulator.clientItem.type.includes("Telco")) {
-                                                    wireType = wireTypes.COMMUNICATION.TELCO;
-                                                } else if (insulator.clientItem.type.includes("Drop")) {
-                                                    wireType = wireTypes.COMMUNICATION.TELCO;
-                                                } else {
-                                                    wireType = wireTypes.COMMUNICATION.FIBER;
-                                                }
-                                                break;
-                                            default:
-                                                wireType = wireTypes.COMMUNICATION.TELCO;
-                                        }
-
-                                        if (!insulator.wires) {
-                                            insulator.wires = [];
-                                        }
-
-                                        const wireConfig = {
-                                            owner: insulator.owner,
-                                            clientItem: {
-                                                type: "COMMUNICATION",
-                                                wireSpec: wireType.spec,
-                                                usage: wireType.usage,
-                                                tensionGroups: wireType.tension.groups
-                                            }
-                                        };
-
-                                        insulator.wires.push(wireConfig);
-
-                                        // Add wire to endpoint if it has a connection
-                                        if (endPoint.connectionId && endPoint.type !== "OTHER_POLE") {
-                                            endPoint.wires.push(wireConfig);
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-
-                    // Add wires array to structure if it doesn't exist
-                    if (!data.wires) {
-                        data.wires = [];
-                    }
-
-                    // Populate structure wires from endpoints and insulators
-                    if (data.wireEndPoints) {
-                        data.wireEndPoints.forEach(endPoint => {
-                            if (endPoint.wires) {
-                                data.wires.push(...endPoint.wires);
-                            }
-                        });
-                    }
-
-                    // Set default equipment bearing
-                    if (data.equipments) {
-                        data.equipments.forEach(equipment => {
-                            if (!equipment.bearing) {
-                                equipment.bearing = {
-                                    unit: "DEGREE",
-                                    value: 0
-                                };
-                            }
-                        });
-                    }
-
-                    // Process nested objects
-                    for (const key in data) {
-                        setDefaultPoleData(data[key]);
-                    }
-                }
-            }
+    // Process the JSON file on form submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!fileInput.files.length) {
+        alert("Please choose a file");
+        return;
+      }
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        try {
+          const data = JSON.parse(event.target.result);
+          replaceOwnerInJson(data);
+          addMissingTypeInEquipments(data);
+          const processedJson = JSON.stringify(data, null, 4);
+          const blob = new Blob([processedJson], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          // Create a temporary link to trigger download
+          const downloadLink = document.createElement('a');
+          downloadLink.href = url;
+          downloadLink.download = "processed_" + file.name;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          // Optionally revoke the object URL after a short delay
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } catch(error) {
+          alert("Error processing JSON: " + error.message);
         }
-
-        // Form submission handler
-        const form = document.getElementById('jsonForm');
-        const fileInput = document.getElementById('fileInput');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (!fileInput.files.length) {
-                alert("Please choose a file");
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                try {
-                    const data = JSON.parse(event.target.result);
-                    
-                    // Apply all transformations
-                    replaceOwnerInJson(data);
-                    addMissingTypeInEquipments(data);
-                    setDefaultPoleData(data);
-
-                    // Create download for processed file
-                    const processedJson = JSON.stringify(data, null, 2);
-                    const blob = new Blob([processedJson], { type: "application/json" });
-                    const url = URL.createObjectURL(blob);
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = url;
-                    downloadLink.download = "processed_" + file.name;
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                    setTimeout(() => URL.revokeObjectURL(url), 1000);
-                } catch(error) {
-                    alert("Error processing JSON: " + error.message);
-                }
-            };
-
-            reader.readAsText(file);
-        });
-    </script>
+      };
+      reader.readAsText(file);
+    });
+  </script>
 </body>
 </html>
