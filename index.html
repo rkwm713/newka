@@ -155,35 +155,114 @@
                             const wireTypes = {
                                 PRIMARY: {
                                     spec: "4/0 ACSR - Penguin",
-                                    usage: "PRIMARY"
+                                    usage: "PRIMARY",
+                                    tension: {
+                                        groups: [
+                                            {
+                                                distance: { unit: "FOOT", value: 0 },
+                                                tension: { unit: "POUND", value: 1500 }
+                                            }
+                                        ]
+                                    }
                                 },
                                 NEUTRAL: {
                                     spec: "2/0 ACSR - Quail",
-                                    usage: "NEUTRAL"
+                                    usage: "NEUTRAL",
+                                    tension: {
+                                        groups: [
+                                            {
+                                                distance: { unit: "FOOT", value: 0 },
+                                                tension: { unit: "POUND", value: 1000 }
+                                            }
+                                        ]
+                                    }
                                 },
                                 SECONDARY: {
                                     spec: "4/0 Quadruplex (Span)",
-                                    usage: "SECONDARY"
+                                    usage: "SECONDARY",
+                                    tension: {
+                                        groups: [
+                                            {
+                                                distance: { unit: "FOOT", value: 0 },
+                                                tension: { unit: "POUND", value: 500 }
+                                            }
+                                        ]
+                                    }
                                 },
                                 SERVICE: {
                                     spec: "2 Triplex (Service)",
-                                    usage: "UTILITY_SERVICE"
+                                    usage: "UTILITY_SERVICE",
+                                    tension: {
+                                        groups: [
+                                            {
+                                                distance: { unit: "FOOT", value: 0 },
+                                                tension: { unit: "POUND", value: 100 }
+                                            }
+                                        ]
+                                    }
                                 },
                                 COMMUNICATION: {
                                     FIBER: {
                                         spec: "144ct SS",
-                                        usage: "COMMUNICATION"
+                                        usage: "COMMUNICATION",
+                                        tension: {
+                                            groups: [
+                                                {
+                                                    distance: { unit: "FOOT", value: 0 },
+                                                    tension: { unit: "POUND", value: 750 }
+                                                }
+                                            ]
+                                        }
                                     },
                                     CATV: {
                                         spec: ".625\" CATV Service",
-                                        usage: "COMMUNICATION_SERVICE"
+                                        usage: "COMMUNICATION_SERVICE",
+                                        tension: {
+                                            groups: [
+                                                {
+                                                    distance: { unit: "FOOT", value: 0 },
+                                                    tension: { unit: "POUND", value: 200 }
+                                                }
+                                            ]
+                                        }
                                     },
                                     TELCO: {
                                         spec: ".375\" TELCO Service",
-                                        usage: "COMMUNICATION_SERVICE"
+                                        usage: "COMMUNICATION_SERVICE",
+                                        tension: {
+                                            groups: [
+                                                {
+                                                    distance: { unit: "FOOT", value: 0 },
+                                                    tension: { unit: "POUND", value: 150 }
+                                                }
+                                            ]
+                                        }
                                     }
                                 }
                             };
+
+                            // Add primary and neutral wires
+                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
+                                endPoint.wires.push({
+                                    owner: {
+                                        id: "PNM",
+                                        industry: "UTILITY"
+                                    },
+                                    clientItem: {
+                                        type: "PRIMARY",
+                                        wireSpec: wireTypes.PRIMARY.spec,
+                                        usage: wireTypes.PRIMARY.usage,
+                                        tensionGroups: wireTypes.PRIMARY.tension.groups
+
+                            // Add primary and neutral wires
+                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
+                                endPoint.wires.push({
+                                    owner: {
+                                        id: "PNM",
+                                        industry: "UTILITY"
+                                    },
+                                    clientItem: {
+
 
                             // Add primary and neutral wires
                             if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
@@ -207,7 +286,8 @@
                                     clientItem: {
                                         type: "NEUTRAL",
                                         wireSpec: wireTypes.NEUTRAL.spec,
-                                        usage: wireTypes.NEUTRAL.usage
+                                        usage: wireTypes.NEUTRAL.usage,
+                                        tensionGroups: wireTypes.NEUTRAL.tension.groups
                                     }
                                 });
                             }
@@ -241,7 +321,8 @@
                                             clientItem: {
                                                 type: "COMMUNICATION",
                                                 wireSpec: wireSpec,
-                                                usage: usage
+                                                usage: usage,
+                                                tensionGroups: wireTypes.COMMUNICATION.FIBER.tension.groups
                                             }
                                         });
 
