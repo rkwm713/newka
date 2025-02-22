@@ -143,49 +143,135 @@
                         }
                     }
 
-                    // Set wire specifications
-                    if (data.wires) {
-                        data.wires.forEach(wire => {
-                            if (!wire.clientItem) {
-                                wire.clientItem = {};
+                    // Set wire specifications and establish connections
+                    if (data.wireEndPoints) {
+                        data.wireEndPoints.forEach(endPoint => {
+                            // Create wire array if it doesn't exist
+                            if (!endPoint.wires) {
+                                endPoint.wires = [];
                             }
-                            
-                            if (wire.owner) {
-                                switch(wire.owner.id) {
-                                    case "PNM":
-                                        if (!wire.clientItem.wireSpec) {
-                                            switch(wire.clientItem.type) {
-                                                case "PRIMARY":
-                                                case "NEUTRAL":
-                                                case "OPEN_SECONDARY":
-                                                    wire.clientItem.wireSpec = "2 ACSR";
-                                                    break;
-                                                case "SERVICE":
-                                                    wire.clientItem.wireSpec = "2 Triplex (Service) (7/1)";
-                                                    break;
-                                                default:
-                                                    wire.clientItem.wireSpec = "2 ACSR";
-                                            }
-                                        }
-                                        break;
-                                    case "GigaPower":
-                                        wire.clientItem.wireSpec = "6M EHS (7/0)";
-                                        break;
-                                    case "COMCAST":
-                                        if (wire.clientItem.type === "CATV") {
-                                            wire.clientItem.wireSpec = "1/4\" EHS (7/0)";
-                                        } else if (wire.clientItem.type === "SERVICE") {
-                                            wire.clientItem.wireSpec = "Slacked Tension .25\" CATV Service (1/0)";
-                                        }
-                                        break;
-                                    case "Centurylink / Brightspeed":
-                                        if (wire.clientItem.type === "TELCO") {
-                                            wire.clientItem.wireSpec = "10M EHS (7/0)";
-                                        } else if (wire.clientItem.type === "SERVICE") {
-                                            wire.clientItem.wireSpec = "Slacked Tension .25\" Telco Service (1/0)";
-                                        }
-                                        break;
+
+                            // Add wire based on connection type and owner
+                            const wireTypes = {
+                                PRIMARY: {
+                                    spec: "4/0 ACSR - Penguin",
+                                    usage: "PRIMARY"
+                                },
+                                NEUTRAL: {
+                                    spec: "2/0 ACSR - Quail",
+                                    usage: "NEUTRAL"
+                                },
+                                SECONDARY: {
+                                    spec: "4/0 Quadruplex (Span)",
+                                    usage: "SECONDARY"
+                                },
+                                SERVICE: {
+                                    spec: "2 Triplex (Service)",
+                                    usage: "UTILITY_SERVICE"
+                                },
+                                COMMUNICATION: {
+                                    FIBER: {
+                                        spec: "144ct SS",
+                                        usage: "COMMUNICATION"
+                                    },
+                                    CATV: {
+                                        spec: ".625\" CATV Service",
+                                        usage: "COMMUNICATION_SERVICE"
+                                    },
+                                    TELCO: {
+                                        spec: ".375\" TELCO Service",
+                                        usage: "COMMUNICATION_SERVICE"
+                                    }
                                 }
+                            };
+
+                            // Add primary and neutral wires
+                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
+                                endPoint.wires.push({
+                                    owner: {
+                                        id: "PNM",
+                                        industry: "UTILITY"
+                                    },
+                                    clientItem: {
+                                        type: "PRIMARY",
+                                        wireSpec: wireTypes.PRIMARY.spec,
+                                        usage: wireTypes.PRIMARY.usage
+                                    }
+                                });
+
+                                endPoint.wires.push({
+                                    owner: {
+                                        id: "PNM",
+                                        industry: "UTILITY"
+                                    },
+                                    clientItem: {
+                                        type: "NEUTRAL",
+                                        wireSpec: wireTypes.NEUTRAL.spec,
+                                        usage: wireTypes.NEUTRAL.usage
+                                    }
+                                });
+                            }
+
+                            // Add communication wires
+                            if (data.insulators) {
+                                data.insulators.forEach(insulator => {
+                                    if (insulator.clientItem.type.includes("Comms")) {
+                                        let wireSpec;
+                                        let usage;
+                                        
+                                        switch(insulator.owner?.id) {
+                                            case "UPN/TW":
+                                            case "MCI WORLDCOM":
+                                            case "COMCAST":
+                                            case "Centurylink / Brightspeed":
+                                                wireSpec = wireTypes.COMMUNICATION.FIBER.spec;
+                                                usage = wireTypes.COMMUNICATION.FIBER.usage;
+                                                break;
+                                            default:
+                                                wireSpec = wireTypes.COMMUNICATION.TELCO.spec;
+                                                usage = wireTypes.COMMUNICATION.TELCO.usage;
+                                        }
+
+                                        if (!insulator.wires) {
+                                            insulator.wires = [];
+                                        }
+
+                                        insulator.wires.push({
+                                            owner: insulator.owner,
+                                            clientItem: {
+                                                type: "COMMUNICATION",
+                                                wireSpec: wireSpec,
+                                                usage: usage
+                                            }
+                                        });
+
+                                        // Add wire to endpoint if it has a connection
+                                        if (endPoint.connectionId) {
+                                            endPoint.wires.push({
+                                                owner: insulator.owner,
+                                                clientItem: {
+                                                    type: "COMMUNICATION",
+                                                    wireSpec: wireSpec,
+                                                    usage: usage
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    // Add wires array to structure if it doesn't exist
+                    if (!data.wires) {
+                        data.wires = [];
+                    }
+
+                    // Populate structure wires from endpoints and insulators
+                    if (data.wireEndPoints) {
+                        data.wireEndPoints.forEach(endPoint => {
+                            if (endPoint.wires) {
+                                data.wires.push(...endPoint.wires);
                             }
                         });
                     }
