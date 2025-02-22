@@ -1,0 +1,10 @@
+Type	Size	"Horizontal Offset ("")"	"Vertical Offset ("")"	Maximum Rated Strength (lbf)	Maximum Cantilever Strength (lbf)	Maximum Compression Strength (lbf)	Maximum Tension Strength (lbf)	"Line of Action Offset ("")"	Weight (lbf)	Lateral Area (ftý)	Pole Side Area (ftý)	"Bolt Hole Diameter (/16"")"	Shape
+CLAMP	Comms - 3-Bolt Clamp	0	0	6650				0	1	0.0064	0.0264	10	SQUARE
+DEADEND	Comms - Deadend Clamp	2	0	6650				0	1	0.0064	0.0264	10	ROUND
+DEADEND	PNM - 15 kV Polymer Dead End Insulator	13	0	15000				0	2.6	1.083	0.09	None	ROUND
+RUNNING_ANGLE	PNM - 15 kV Polymer Running Angle Insulator	29	0	15000				0	2.6	0.3147	0.19635	None	ROUND
+CLAMP	"PNM - 3"" Insulator Spool"	0	0	15000				0	1.21	0.065	0.065	10	ROUND
+BRACKET	"PNM - ANSI 55-4 Pin Type Polyethylene Insulator (18"" Bracket)"	18	6.63	3000				0	3.61	0.73	0.73	10	ROUND
+PIN	PNM - ANSI 55-4 Pin Type Polyethylene Insulator (Crossarm)	0	6.63	3000				0	3.61	0.73	0.73	10	ROUND
+POLE_TOP	PNM - ANSI 55-4 Pin Type Polyethylene Insulator (Pole Top)	0	6.63	3000				0	3.61	0.73	0.73	10	ROUND
+CLAMP	PNM - Secondary Eye Bolt	2	0	3000				0	1	0.0064	0.0264	10	ROUND
