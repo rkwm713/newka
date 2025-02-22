@@ -253,28 +253,6 @@
                                         wireSpec: wireTypes.PRIMARY.spec,
                                         usage: wireTypes.PRIMARY.usage,
                                         tensionGroups: wireTypes.PRIMARY.tension.groups
-
-                            // Add primary and neutral wires
-                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
-                                endPoint.wires.push({
-                                    owner: {
-                                        id: "PNM",
-                                        industry: "UTILITY"
-                                    },
-                                    clientItem: {
-
-
-                            // Add primary and neutral wires
-                            if (endPoint.type === "NEXT_POLE" || endPoint.type === "PREVIOUS_POLE") {
-                                endPoint.wires.push({
-                                    owner: {
-                                        id: "PNM",
-                                        industry: "UTILITY"
-                                    },
-                                    clientItem: {
-                                        type: "PRIMARY",
-                                        wireSpec: wireTypes.PRIMARY.spec,
-                                        usage: wireTypes.PRIMARY.usage
                                     }
                                 });
 
@@ -333,7 +311,8 @@
                                                 clientItem: {
                                                     type: "COMMUNICATION",
                                                     wireSpec: wireSpec,
-                                                    usage: usage
+                                                    usage: usage,
+                                                    tensionGroups: wireTypes.COMMUNICATION.FIBER.tension.groups
                                                 }
                                             });
                                         }
