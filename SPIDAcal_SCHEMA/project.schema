@@ -1,0 +1,199 @@
+{
+  "id": "#/spidacalc/calc/project.schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "clientFile",
+    "leads"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+        "description": "This is a database ID created by SPIDAdb.",
+        "type": "string"
+    },
+    "pmId": {
+        "description": "This is a database ID created by ProjectManager.",
+        "type": "number"
+    },
+    "company": {
+       "description": "Company in which the project exists in studio. (Not the project creator).",
+       "$ref": "../../spidamin/user/company.schema"
+    },
+    "label": {
+        "description": "Display name for project component",
+        "type": "string"
+    },
+    "schema": {
+      "type": "string",
+      "description": "Full URL of the schema. /schema/path/to/example.schema"
+    },
+    "version": {
+      "type": "number",
+      "description": "This is a schema version integer."
+    },
+    "clientFile": {
+      "type": "string",
+      "description": "Filename of the client file with extension. (ex, Demo.client)"
+    },
+    "clientFileVersion": {
+       "type":"string",
+       "description": "version identifier for a specific client file"
+    },
+    "date": {
+      "type": "string",
+      "description": "Date the project was created."
+    },
+    "dateModified": {
+      "$ref": "../../general/long_date.schema",
+      "description": "Date the project was last modified locally."
+    },
+    "dateSavedToStudio": {
+       "$ref": "../../general/long_date.schema",
+       "description": "Date the project was last saved to SPIDAstudio."
+    },
+    "engineer": {
+      "type": "string",
+      "description": "Engineer of the project."
+    },
+    "generalLocation": {
+      "type": "string",
+      "description": "Project's general location on the map."
+    },
+    "address": {
+      "$ref": "../../general/address.schema"
+    },
+    "designLayerToPromote": {
+      "type": "string",
+      "description": "The name of the design layer that will be promoted in SPIDAstudio."
+    },
+    "clearanceSettings": {
+      "type": "object",
+      "description": "These values are deprecated and will be ignored in SPIDAcalc 8.0",
+      "properties": {
+        "requiredGroundClearanceAtPole": {
+          "$ref": "../../general/measurable.schema"
+        },
+        "requiredCommToUtilityAtPole": {
+          "$ref": "../../general/measurable.schema"
+        },
+        "requiredGroundClearanceAtMidspan": {
+          "$ref": "../../general/measurable.schema"
+        },
+        "requiredCommToUtilityAtMidspan": {
+          "$ref": "../../general/measurable.schema"
+        },
+        "requiredCommToStreetLight": {
+          "$ref": "../../general/measurable.schema"
+        },
+        "requiredCommToStreetLightDripLoop": {
+          "$ref": "../../general/measurable.schema"
+        },
+        "calculateSagToDetermineMidspanClearances": {
+          "type": "boolean"
+        },
+        "includeGuysInClearanceCalculations": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "comments": {
+      "type": "string",
+      "description": "Any comments about the project."
+    },
+    "userDefinedValues": {
+        "description": "Any flat JSON object with string fields. This gets stored as user defined key-value pairs. For example, this could be used for an outside system id.",
+        "id": "userDefinedValues",
+        "type": "object"
+    },
+	"forms": {
+      "type": "array",
+      "description": "An optional array of Project forms.",
+      "items": {
+        "$ref": "../../general/form.schema"
+      }
+    },
+    "defaultLocationForms": {
+      "type": "array",
+      "description": "An optional array of default Location forms.",
+      "items": {
+        "$ref": "../../general/form.schema"
+      }
+    },
+    "defaultLoadCases": {
+      "type": "array",
+      "description": "An optional array of default Load Cases",
+      "items": {
+        "$ref": "../client/load_case.schema"
+      }
+    },
+    "defaultClearanceCases": {
+      "type": "array",
+      "description": "An optional array of default Clearance Cases",
+      "items": {
+        "$ref": "../client/clearance_case.schema"
+      }
+    },
+    "defaultStrengthCase": {
+      "description": "An optional default Strength Case",
+      "$ref": "../client/strength_case.schema"
+    },
+    "leads": {
+      "type": "array",
+      "description": "All of the leads in the project",
+      "items": {
+        "type": "object",
+        "id": "lead",
+        "description": "A lead is a string of poles. It could be a circuit, or just a logical grouping.",
+        "required": [
+          "locations"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+              "description": "Primary Key and unique identifier for project component",
+              "type": "string"
+          },
+          "label": {
+              "description": "Display name for project component",
+              "type": "string"
+          },
+          "locations": {
+            "type": "array",
+            "id": "locations",
+            "description": "All locations in lead.",
+            "items": {
+                "$ref":"../../spidacalc/calc/location.schema"
+            }
+          }
+        }
+      }
+    },
+    "clientData": {
+      "description": "the client items in use in the project",
+      "$ref": "../client/data.schema"
+    },
+    "terrainLayers": {
+      "type": "array",
+      "items": {
+        "$ref": "../../spidacalc/calc/terrain_layer.schema"
+      }
+    },
+    "appliedTerrainLayers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["designLayer", "terrainLayer"],
+        "properties": {
+          "designLayer": {
+            "type": "string"
+          },
+          "terrainLayer": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
