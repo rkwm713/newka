@@ -1,0 +1,88 @@
+For COMCAST use a ¼” EHS (7/0) for the Messenger
+[
+  {
+    "Size": ".500coax",
+    "Abbreviation": 0.5,
+    "Groups": "Comcast Coax",
+    "Diameter (\")": 0.5,
+    "Weight per Length (lbf/ft)": 0.103,
+    "Description": ".500coax"
+  },
+For Centurylink / Brightspeed use a 10M EHS (7/0) for the Messenger
+  {
+    "Size": "100PR Copper",
+    "Abbreviation": "100PR",
+    "Groups": "CTL Copper",
+    "Diameter (\")": 0.91,
+    "Weight per Length (lbf/ft)": 0.6005,
+    "Description": "100PR Copper"
+  },
+  {
+    "Size": "144ct",
+    "Abbreviation": "144ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (\")": 0.85,
+    "Weight per Length (lbf/ft)": 0.251,
+    "Description": "144ct"
+  },
+  {
+    "Size": "144ct (Con)",
+    "Abbreviation": "144ct (Con)",
+    "Groups": "Conterra Fiber",
+    "Diameter (\")": 0.63,
+    "Weight per Length (lbf/ft)": 0.105,
+    "Description": "144ct (Con)"
+  },
+  {
+    "Size": "144ct (EZE)",
+    "Abbreviation": "144ct (EZE)",
+    "Groups": "Ezee Fiber",
+    "Diameter (\")": 0.7,
+    "Weight per Length (lbf/ft)": 0.178,
+    "Description": "144ct (EZE)"
+  },
+For GigaPower use a 6M EHS (7/0) for the Messenger
+  {
+    "Size": "144ct (GIG)",
+    "Abbreviation": "144ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (\")": 0.44,
+    "Weight per Length (lbf/ft)": 0.084,
+    "Description": "144ct GIG"
+  },
+For UPN use a 144ct SS (1/0) for the Messenger
+  {
+    "Size": "144ct (UPN)",
+    "Abbreviation": "144ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (\")": 0.62,
+    "Weight per Length (lbf/ft)": 0.109,
+    "Description": "144ct (UPN)"
+  },
+  {
+    "Size": "144ct (Vex)",
+    "Abbreviation": "144ct (Vex)",
+    "Groups": "Vexus Fiber",
+    "Diameter (\")": 0.75,
+    "Weight per Length (lbf/ft)": 0.193,
+    "Description": "144ct (Vex)"
+  },
+For Verizon Fiber use a 144ct SS (1/0) for the Messenger
+  {
+    "Size": "144ct (VZW)",
+    "Abbreviation": "144ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (\")": 0.51,
+    "Weight per Length (lbf/ft)": 0.088,
+    "Description": "144ct (VZW)"
+  }
+]
+For Vexus use a ¼” EHS (7/0) for the Messenger
+  {
+    "Size": "144ct (VEX)",
+    "Abbreviation": "144ct VEX",
+    "Groups": "Vexus Fiber",
+    "Diameter (\")": 0.44,
+    "Weight per Length (lbf/ft)": 0.084,
+    "Description": "144ct VEX"
+  },
