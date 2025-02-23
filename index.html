@@ -153,7 +153,6 @@
   <div class="container">
     <h1>Upload File</h1>
     <p>Select a .json file to process</p>
-    <!-- The form now has no action since processing is done client side -->
     <form id="upload-form">
       <div class="file-input-container" id="file-input-container">
         <input type="file" name="file" accept=".json" required id="file-input">
@@ -165,12 +164,161 @@
       <button type="submit">Process File</button>
     </form>
     <div class="footer">
-      <!-- Change the src path to your static image location -->
       <img src="static/images/bot.png" alt="Company Logo" class="footer-logo">
     </div>
   </div>
 
   <script>
+    // Default bundle components configuration based on owner
+    const OWNER_CONFIGS = {
+      'DEFAULT': {
+        messenger: {
+          size: '6.6M',
+          clientItemAlias: 'MESSENGER_6.6M'
+        },
+        bundleComponent: {
+          size: '72 Count Fiber',
+          clientItemAlias: 'FIBER_72',
+          diameter: 0.398,
+          weight: 1.0
+        }
+      },
+      'COMCAST': {
+        messenger: {
+          size: '1/4" EHS',
+          clientItemAlias: 'MESSENGER_1/4_EHS'
+        },
+        bundleComponent: {
+          size: '.500coax',
+          clientItemAlias: 'COAX_500',
+          diameter: 0.5,
+          weight: 0.103
+        }
+      },
+      'CTL': {
+        messenger: {
+          size: '10M',
+          clientItemAlias: 'MESSENGER_10M'
+        },
+        bundleComponent: {
+          size: '144ct',
+          clientItemAlias: 'FIBER_144',
+          diameter: 0.85,
+          weight: 0.251
+        }
+      },
+      'BRIGHTSPEED': {
+        messenger: {
+          size: '10M',
+          clientItemAlias: 'MESSENGER_10M'
+        },
+        bundleComponent: {
+          size: '144ct',
+          clientItemAlias: 'FIBER_144',
+          diameter: 0.85,
+          weight: 0.251
+        }
+      },
+      'GIGAPOWER': {
+        messenger: {
+          size: '6M',
+          clientItemAlias: 'MESSENGER_6M'
+        },
+        bundleComponent: {
+          size: '144ct (GIG)',
+          clientItemAlias: 'FIBER_144_GIG',
+          diameter: 0.44,
+          weight: 0.084
+        }
+      },
+      'UPN': {
+        messenger: {
+          size: '144ct SS',
+          clientItemAlias: 'MESSENGER_144CT_SS'
+        },
+        bundleComponent: {
+          size: '144ct (UPN)',
+          clientItemAlias: 'FIBER_144_UPN',
+          diameter: 0.62,
+          weight: 0.109
+        }
+      },
+      'VERIZON': {
+        messenger: {
+          size: '144ct SS',
+          clientItemAlias: 'MESSENGER_144CT_SS'
+        },
+        bundleComponent: {
+          size: '144ct (VZW)',
+          clientItemAlias: 'FIBER_144_VZW',
+          diameter: 0.51,
+          weight: 0.088
+        }
+      },
+      'VEXUS': {
+        messenger: {
+          size: '1/4" EHS',
+          clientItemAlias: 'MESSENGER_1/4_EHS'
+        },
+        bundleComponent: {
+          size: '144ct (VEX)',
+          clientItemAlias: 'FIBER_144_VEX',
+          diameter: 0.44,
+          weight: 0.084
+        }
+      }
+    };
+
+    // Function to get owner config based on owner ID
+    function getOwnerConfig(ownerId) {
+      // Extract the base owner name before any slash
+      const baseOwner = ownerId.split('/')[0].toUpperCase();
+      return OWNER_CONFIGS[baseOwner] || OWNER_CONFIGS.DEFAULT;
+    }
+
+    // Function to add bundle components to communication wires
+    function addBundleComponentsToWires(data) {
+      if (typeof data === "object" && data !== null) {
+        if (Array.isArray(data)) {
+          data.forEach(item => addBundleComponentsToWires(item));
+        } else {
+          // Check if this is a wire with a communication industry owner
+          if (data.owner && data.owner.industry === "COMMUNICATION") {
+            const ownerConfig = getOwnerConfig(data.owner.id);
+            
+            // Update usageGroup to COMMUNICATION
+            data.usageGroup = "COMMUNICATION";
+
+            // Update clientItem with bundle information
+            data.clientItem = {
+              size: "Communication Bundle",
+              group: "COMMUNICATION",
+              messenger: ownerConfig.messenger,
+              bundleComponents: [
+                {
+                  size: ownerConfig.bundleComponent.size,
+                  clientItemAlias: ownerConfig.bundleComponent.clientItemAlias
+                }
+              ],
+              diameter: {
+                unit: "INCH",
+                value: ownerConfig.bundleComponent.diameter
+              },
+              weight: {
+                unit: "POUND_FORCE_PER_FOOT",
+                value: ownerConfig.bundleComponent.weight
+              }
+            };
+          }
+
+          // Continue recursion for nested objects
+          for (const key in data) {
+            addBundleComponentsToWires(data[key]);
+          }
+        }
+      }
+    }
+
     // Function to replace owner values in the JSON data
     function replaceOwnerInJson(data) {
       if (typeof data === "object" && data !== null) {
@@ -254,17 +402,16 @@
           const data = JSON.parse(event.target.result);
           replaceOwnerInJson(data);
           addMissingTypeInEquipments(data);
+          addBundleComponentsToWires(data); // Add the new processing step
           const processedJson = JSON.stringify(data, null, 4);
           const blob = new Blob([processedJson], { type: "application/json" });
           const url = URL.createObjectURL(blob);
-          // Create a temporary link to trigger download
           const downloadLink = document.createElement('a');
           downloadLink.href = url;
           downloadLink.download = "processed_" + file.name;
           document.body.appendChild(downloadLink);
           downloadLink.click();
           document.body.removeChild(downloadLink);
-          // Optionally revoke the object URL after a short delay
           setTimeout(() => URL.revokeObjectURL(url), 1000);
         } catch(error) {
           alert("Error processing JSON: " + error.message);
