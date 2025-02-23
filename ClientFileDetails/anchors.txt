@@ -1,3 +1,0 @@
-Size	Maximum Rated Strength (lbf)
-"12"" Anchor - 1"" Rod"	24700
-"8"" Anchor - 1"" Rod"	16625
