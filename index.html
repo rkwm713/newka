@@ -169,200 +169,203 @@
   </div>
 
   <script>
-    // Default bundle components configuration based on owner
-    const OWNER_CONFIGS = {
-      'DEFAULT': {
-        messenger: {
-          size: '6.6M',
-          clientItemAlias: 'MESSENGER_6.6M'
-        },
-        bundleComponent: {
-          size: '72 Count Fiber',
-          clientItemAlias: 'FIBER_72',
-          diameter: 0.398,
-          weight: 1.0
-        }
-      },
-      'COMCAST': {
-        messenger: {
+    // Function to determine messenger type based on owner
+    function getMessengerType(ownerId) {
+      const ownerCompany = ownerId.split('/')[0].toUpperCase();
+      
+      const messengerMap = {
+        'COMCAST': {
           size: '1/4" EHS',
-          clientItemAlias: 'MESSENGER_1/4_EHS'
+          clientItemAlias: 'MESSENGER_1/4_EHS_7/0'
         },
-        bundleComponent: {
-          size: '.500coax',
-          clientItemAlias: 'COAX_500',
-          diameter: 0.5,
-          weight: 0.103
-        }
-      },
-      'CTL': {
-        messenger: {
-          size: '10M',
-          clientItemAlias: 'MESSENGER_10M'
+        'CENTURYLINK': {
+          size: '10M EHS',
+          clientItemAlias: 'MESSENGER_10M_EHS_7/0'
         },
-        bundleComponent: {
-          size: '144ct',
-          clientItemAlias: 'FIBER_144',
-          diameter: 0.85,
-          weight: 0.251
-        }
-      },
-      'BRIGHTSPEED': {
-        messenger: {
-          size: '10M',
-          clientItemAlias: 'MESSENGER_10M'
+        'BRIGHTSPEED': {
+          size: '10M EHS',
+          clientItemAlias: 'MESSENGER_10M_EHS_7/0'
         },
-        bundleComponent: {
-          size: '144ct',
-          clientItemAlias: 'FIBER_144',
-          diameter: 0.85,
-          weight: 0.251
-        }
-      },
-      'GIGAPOWER': {
-        messenger: {
-          size: '6M',
-          clientItemAlias: 'MESSENGER_6M'
+        'GIGAPOWER': {
+          size: '6M EHS',
+          clientItemAlias: 'MESSENGER_6M_EHS_7/0'
         },
-        bundleComponent: {
-          size: '144ct (GIG)',
-          clientItemAlias: 'FIBER_144_GIG',
-          diameter: 0.44,
-          weight: 0.084
-        }
-      },
-      'UPN': {
-        messenger: {
+        'UPN': {
           size: '144ct SS',
-          clientItemAlias: 'MESSENGER_144CT_SS'
+          clientItemAlias: 'MESSENGER_144CT_SS_1/0'
         },
-        bundleComponent: {
-          size: '144ct (UPN)',
-          clientItemAlias: 'FIBER_144_UPN',
-          diameter: 0.62,
-          weight: 0.109
-        }
-      },
-      'VERIZON': {
-        messenger: {
+        'VERIZON': {
           size: '144ct SS',
-          clientItemAlias: 'MESSENGER_144CT_SS'
+          clientItemAlias: 'MESSENGER_144CT_SS_1/0'
         },
-        bundleComponent: {
-          size: '144ct (VZW)',
-          clientItemAlias: 'FIBER_144_VZW',
-          diameter: 0.51,
-          weight: 0.088
-        }
-      },
-      'VEXUS': {
-        messenger: {
+        'VZW': {
+          size: '144ct SS',
+          clientItemAlias: 'MESSENGER_144CT_SS_1/0'
+        },
+        'VEXUS': {
           size: '1/4" EHS',
-          clientItemAlias: 'MESSENGER_1/4_EHS'
+          clientItemAlias: 'MESSENGER_1/4_EHS_7/0'
         },
-        bundleComponent: {
-          size: '144ct (VEX)',
-          clientItemAlias: 'FIBER_144_VEX',
-          diameter: 0.44,
-          weight: 0.084
+        'VEX': {
+          size: '1/4" EHS',
+          clientItemAlias: 'MESSENGER_1/4_EHS_7/0'
+        }
+      };
+
+      const defaultMessenger = {
+        size: '6.6M EHS',
+        clientItemAlias: 'MESSENGER_6.6M_EHS_7/0'
+      };
+
+      for (const company in messengerMap) {
+        if (ownerCompany.includes(company)) {
+          return messengerMap[company];
         }
       }
-    };
-
-    // Function to get owner config based on owner ID
-    function getOwnerConfig(ownerId) {
-      // Extract the base owner name before any slash
-      const baseOwner = ownerId.split('/')[0].toUpperCase();
-      return OWNER_CONFIGS[baseOwner] || OWNER_CONFIGS.DEFAULT;
+      
+      return defaultMessenger;
     }
 
-    // Function to add bundle components to communication wires
-    function addBundleComponentsToWires(data) {
-      if (typeof data === "object" && data !== null) {
-        if (Array.isArray(data)) {
-          data.forEach(item => addBundleComponentsToWires(item));
-        } else {
-          // Check if this is a wire with a communication industry owner
-          if (data.owner && data.owner.industry === "COMMUNICATION") {
-            const ownerConfig = getOwnerConfig(data.owner.id);
-            
-            // Update usageGroup to COMMUNICATION
-            data.usageGroup = "COMMUNICATION";
+    // Function to convert communication wire to bundle format
+    function convertCommunicationWire(wire, bundleComponents) {
+      if (wire.owner?.industry === 'COMMUNICATION') {
+        // Get fiber count from the wire size or default to 72
+        const fiberCountMatch = wire.clientItem?.size?.match(/(\d+)ct/);
+        const fiberCount = fiberCountMatch ? fiberCountMatch[1] : '72';
 
-            // Update clientItem with bundle information
-            data.clientItem = {
-              size: "Communication Bundle",
-              group: "COMMUNICATION",
-              messenger: ownerConfig.messenger,
-              bundleComponents: [
-                {
-                  size: ownerConfig.bundleComponent.size,
-                  clientItemAlias: ownerConfig.bundleComponent.clientItemAlias
-                }
-              ],
-              diameter: {
-                unit: "INCH",
-                value: ownerConfig.bundleComponent.diameter
-              },
-              weight: {
-                unit: "POUND_FORCE_PER_FOOT",
-                value: ownerConfig.bundleComponent.weight
-              }
-            };
-          }
+        // Get the appropriate messenger type based on owner
+        const messenger = getMessengerType(wire.owner.id);
 
-          // Continue recursion for nested objects
-          for (const key in data) {
-            addBundleComponentsToWires(data[key]);
-          }
-        }
-      }
-    }
+        // Find matching bundle component if available
+        const bundleComponent = bundleComponents.find(bc => 
+          bc.Size.startsWith(fiberCount + 'ct') && 
+          bc.Groups.includes(wire.owner.id.split('/')[0])
+        ) || bundleComponents.find(bc => bc.Size.startsWith(fiberCount + 'ct'));
 
-    // Function to replace owner values in the JSON data
-    function replaceOwnerInJson(data) {
-      if (typeof data === "object" && data !== null) {
-        if (Array.isArray(data)) {
-          data.forEach(item => replaceOwnerInJson(item));
-        } else {
-          for (const key in data) {
-            if (key === "owner" && typeof data[key] === "object" && data[key] !== null) {
-              if (data[key].id === "Unset Com Owner" && data[key].industry === "COMMUNICATION") {
-                data[key].id = "PNM";
-                data[key].industry = "UTILITY";
-              }
-            } else {
-              replaceOwnerInJson(data[key]);
+        // Set default values
+        const diameter = bundleComponent ? bundleComponent['Diameter (in)'] : 0.398;
+        const weight = bundleComponent ? bundleComponent['Weight per Length (lbf/ft)'] : 1.0;
+        const componentSize = bundleComponent ? bundleComponent.Size : `${fiberCount} Count Fiber`;
+
+        // Always convert to communication bundle
+        wire.usageGroup = 'COMMUNICATION';
+        wire.clientItem = {
+          size: 'Communication Bundle',
+          type: 'BUNDLE',
+          group: 'COMMUNICATION',
+          messenger: {
+            size: messenger.size,
+            clientItemAlias: messenger.clientItemAlias
+          },
+          bundleComponents: [
+            {
+              size: componentSize,
+              clientItemAlias: `FIBER_${fiberCount}`
             }
+          ],
+          diameter: {
+            unit: 'INCH',
+            value: diameter
+          },
+          weight: {
+            unit: 'POUND_FORCE_PER_FOOT',
+            value: weight
           }
-        }
+        };
+      }
+      return wire;
+    }
+
+    // Function to load and parse BundleComponents.json
+    async function loadBundleComponents() {
+      try {
+        const response = await fetch('ClientFileJSON/BundleComponents.json');
+        return await response.json();
+      } catch (error) {
+        console.error('Error loading BundleComponents:', error);
+        return [];
       }
     }
 
-    // Function to add missing 'type' field in equipments
-    function addMissingTypeInEquipments(data) {
-      if (typeof data === "object" && data !== null) {
+    // Equipment and component fixing functions
+    function fixEquipmentType(equipment) {
+      if (equipment.clientItem && typeof equipment.clientItem === 'object' && !equipment.clientItem.type) {
+        equipment.clientItem.type = 'EQUIPMENT';
+      }
+    }
+
+    function fixInsulatorClientItem(insulator) {
+      if (insulator.clientItem && typeof insulator.clientItem === 'object') {
+        insulator.clientItem = insulator.clientItem.size || 'INSULATOR';
+      }
+    }
+
+    function fixPoleClientItem(pole) {
+      if (pole.clientItem && typeof pole.clientItem === 'object') {
+        if (!pole.clientItem.height) pole.clientItem.height = 40;
+        if (!pole.clientItem.species) pole.clientItem.species = 'Southern Yellow Pine';
+        if (!pole.clientItem.classOfPole) pole.clientItem.classOfPole = 4;
+      }
+    }
+
+    function fixAnchorClientItem(anchor) {
+      if (anchor.clientItem && typeof anchor.clientItem === 'object') {
+        anchor.clientItem = anchor.clientItem.size || 'ANCHOR';
+      }
+    }
+
+    function fixCrossArmClientItem(crossArm) {
+      if (crossArm.clientItem && typeof crossArm.clientItem === 'object') {
+        crossArm.clientItem = crossArm.clientItem.size || 'CROSSARM';
+      }
+    }
+
+    function processStructure(structure) {
+      if (!structure) return;
+
+      if (structure.equipments) {
+        structure.equipments.forEach(equipment => fixEquipmentType(equipment));
+      }
+
+      if (structure.insulators) {
+        structure.insulators.forEach(insulator => fixInsulatorClientItem(insulator));
+      }
+
+      if (structure.pole) {
+        fixPoleClientItem(structure.pole);
+      }
+
+      if (structure.anchors) {
+        structure.anchors.forEach(anchor => fixAnchorClientItem(anchor));
+      }
+
+      if (structure.crossArms) {
+        structure.crossArms.forEach(crossArm => fixCrossArmClientItem(crossArm));
+      }
+    }
+
+    function processJson(data, bundleComponents) {
+      if (typeof data === 'object' && data !== null) {
         if (Array.isArray(data)) {
-          data.forEach(item => addMissingTypeInEquipments(item));
+          data.forEach(item => processJson(item, bundleComponents));
         } else {
+          if (data.owner && data.clientItem) {
+            convertCommunicationWire(data, bundleComponents);
+          }
+
+          if (data.structure) {
+            processStructure(data.structure);
+          }
+
           for (const key in data) {
-            if (key === "equipments" && Array.isArray(data[key])) {
-              data[key].forEach(equipment => {
-                if ("clientItem" in equipment && typeof equipment.clientItem === "object" && equipment.clientItem !== null) {
-                  if (!("type" in equipment.clientItem)) {
-                    equipment.clientItem.type = "UNKNOWN";
-                  }
-                }
-              });
-            } else {
-              addMissingTypeInEquipments(data[key]);
-            }
+            processJson(data[key], bundleComponents);
           }
         }
       }
+      return data;
     }
 
-    // Handle drag & drop UI effects
+    // Event listeners and form handling
     const fileInputContainer = document.getElementById('file-input-container');
     const fileInput = document.getElementById('file-input');
     const form = document.getElementById('upload-form');
@@ -371,9 +374,11 @@
       e.preventDefault();
       fileInputContainer.classList.add('drag-over');
     });
+
     fileInputContainer.addEventListener('dragleave', () => {
       fileInputContainer.classList.remove('drag-over');
     });
+
     fileInputContainer.addEventListener('drop', (e) => {
       e.preventDefault();
       fileInputContainer.classList.remove('drag-over');
@@ -382,42 +387,51 @@
         fileInput.files = e.dataTransfer.files;
       }
     });
+
     fileInput.addEventListener('change', () => {
       if (fileInput.files.length > 0) {
         fileInputContainer.classList.add('file-dropped');
       }
     });
 
-    // Process the JSON file on form submission
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
       if (!fileInput.files.length) {
         alert("Please choose a file");
         return;
       }
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        try {
-          const data = JSON.parse(event.target.result);
-          replaceOwnerInJson(data);
-          addMissingTypeInEquipments(data);
-          addBundleComponentsToWires(data); // Add the new processing step
-          const processedJson = JSON.stringify(data, null, 4);
-          const blob = new Blob([processedJson], { type: "application/json" });
-          const url = URL.createObjectURL(blob);
-          const downloadLink = document.createElement('a');
-          downloadLink.href = url;
-          downloadLink.download = "processed_" + file.name;
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
-        } catch(error) {
-          alert("Error processing JSON: " + error.message);
-        }
-      };
-      reader.readAsText(file);
+
+      try {
+        const bundleComponents = await loadBundleComponents();
+        
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+          try {
+            const data = JSON.parse(event.target.result);
+            const processedData = processJson(data, bundleComponents);
+            const processedJson = JSON.stringify(processedData, null, 2);
+            const blob = new Blob([processedJson], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = "processed_" + file.name;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+          } catch(error) {
+            alert("Error processing JSON: " + error.message);
+          }
+        };
+        
+        reader.readAsText(file);
+      } catch(error) {
+        alert("Error loading bundle components: " + error.message);
+      }
     });
   </script>
 </body>
