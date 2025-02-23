@@ -1,0 +1,442 @@
+[
+  {
+    "Size": ".500coax",
+    "Abbreviation": "0.5",
+    "Groups": "Comcast Coax",
+    "Diameter (in)": 0.5,
+    "Weight per Length (lbf/ft)": 0.103,
+    "Description": ".500coax"
+  },
+  {
+    "Size": ".625coax",
+    "Abbreviation": "0.625",
+    "Groups": "Comcast Coax",
+    "Diameter (in)": 0.625,
+    "Weight per Length (lbf/ft)": 0.163,
+    "Description": ".625coax"
+  },
+  {
+    "Size": ".750coax",
+    "Abbreviation": "0.75",
+    "Groups": "Comcast Coax",
+    "Diameter (in)": 0.75,
+    "Weight per Length (lbf/ft)": 0.217,
+    "Description": ".750coax"
+  },
+  {
+    "Size": ".875coax",
+    "Abbreviation": "0.875",
+    "Groups": "Comcast Coax",
+    "Diameter (in)": 0.875,
+    "Weight per Length (lbf/ft)": 0.283,
+    "Description": ".875coax"
+  },
+  {
+    "Size": "1.00coax",
+    "Abbreviation": "1",
+    "Groups": "Comcast Coax",
+    "Diameter (in)": 1,
+    "Weight per Length (lbf/ft)": 0.405,
+    "Description": "1.00coax"
+  },
+  {
+    "Size": "100PR Copper",
+    "Abbreviation": "100PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 0.91,
+    "Weight per Length (lbf/ft)": 0.6005,
+    "Description": "100PR Copper"
+  },
+  {
+    "Size": "12ct (GIG)",
+    "Abbreviation": "12ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.12,
+    "Weight per Length (lbf/ft)": 0.02,
+    "Description": "12ct GIG"
+  },
+  {
+    "Size": "144ct",
+    "Abbreviation": "144ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.85,
+    "Weight per Length (lbf/ft)": 0.251,
+    "Description": "144ct"
+  },
+  {
+    "Size": "144ct (Con)",
+    "Abbreviation": "144ct (Con)",
+    "Groups": "Conterra Fiber",
+    "Diameter (in)": 0.63,
+    "Weight per Length (lbf/ft)": 0.105,
+    "Description": "144ct (Con)"
+  },
+  {
+    "Size": "144ct (EZE)",
+    "Abbreviation": "144ct (EZE)",
+    "Groups": "Ezee Fiber",
+    "Diameter (in)": 0.7,
+    "Weight per Length (lbf/ft)": 0.178,
+    "Description": "144ct (EZE)"
+  },
+  {
+    "Size": "144ct (GIG)",
+    "Abbreviation": "144ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.44,
+    "Weight per Length (lbf/ft)": 0.084,
+    "Description": "144ct GIG"
+  },
+  {
+    "Size": "144ct (UPN)",
+    "Abbreviation": "144ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.62,
+    "Weight per Length (lbf/ft)": 0.109,
+    "Description": "144ct (UPN)"
+  },
+  {
+    "Size": "144ct (Vex)",
+    "Abbreviation": "144ct (Vex)",
+    "Groups": "Vexus Fiber",
+    "Diameter (in)": 0.75,
+    "Weight per Length (lbf/ft)": 0.193,
+    "Description": "144ct (Vex)"
+  },
+  {
+    "Size": "144ct (VZW)",
+    "Abbreviation": "144ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.51,
+    "Weight per Length (lbf/ft)": 0.088,
+    "Description": "144ct (VZW)"
+  },
+  {
+    "Size": "200PR Copper",
+    "Abbreviation": "200PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 1.2,
+    "Weight per Length (lbf/ft)": 1.0875,
+    "Description": "200PR Copper"
+  },
+  {
+    "Size": "24ct",
+    "Abbreviation": "24ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.41,
+    "Weight per Length (lbf/ft)": 0.073,
+    "Description": "24ct"
+  },
+  {
+    "Size": "24ct (EZE)",
+    "Abbreviation": "24ct (EZE)",
+    "Groups": "Ezee Fiber",
+    "Diameter (in)": 0.496,
+    "Weight per Length (lbf/ft)": 0.045,
+    "Description": "24ct (EZE)"
+  },
+  {
+    "Size": "24ct (GIG)",
+    "Abbreviation": "24ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.41,
+    "Weight per Length (lbf/ft)": 0.056,
+    "Description": "24ct GIG"
+  },
+  {
+    "Size": "24ct (UPN)",
+    "Abbreviation": "24ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.4,
+    "Weight per Length (lbf/ft)": 0.0426,
+    "Description": "24ct (UPN)"
+  },
+  {
+    "Size": "24ct (Vex)",
+    "Abbreviation": "24ct (Vex)",
+    "Groups": "Vexus Fiber",
+    "Diameter (in)": 0.48,
+    "Weight per Length (lbf/ft)": 0.091,
+    "Description": "24ct (Vex)"
+  },
+  {
+    "Size": "24ct (VZW)",
+    "Abbreviation": "24ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.41,
+    "Weight per Length (lbf/ft)": 0.073,
+    "Description": "24ct (VZW)"
+  },
+  {
+    "Size": "25PR Copper",
+    "Abbreviation": "25PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 0.57,
+    "Weight per Length (lbf/ft)": 0.237,
+    "Description": "25PR Copper"
+  },
+  {
+    "Size": "288ct",
+    "Abbreviation": "288ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.94,
+    "Weight per Length (lbf/ft)": 0.283,
+    "Description": "288ct"
+  },
+  {
+    "Size": "288ct (EZE)",
+    "Abbreviation": "288ct (EZE)",
+    "Groups": "Ezee Fiber",
+    "Diameter (in)": 0.795,
+    "Weight per Length (lbf/ft)": 0.184,
+    "Description": "288ct (EZE)"
+  },
+  {
+    "Size": "288ct (GIG)",
+    "Abbreviation": "288ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.58,
+    "Weight per Length (lbf/ft)": 0.089,
+    "Description": "288ct GIG"
+  },
+  {
+    "Size": "288ct (UPN)",
+    "Abbreviation": "288ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.72,
+    "Weight per Length (lbf/ft)": 0.131,
+    "Description": "288ct (UPN)"
+  },
+  {
+    "Size": "288ct (Vex)",
+    "Abbreviation": "288ct (Vex)",
+    "Groups": "Vexus Fiber",
+    "Diameter (in)": 0.85,
+    "Weight per Length (lbf/ft)": 0.236,
+    "Description": "288ct (Vex)"
+  },
+  {
+    "Size": "288ct (VZW)",
+    "Abbreviation": "288ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.78,
+    "Weight per Length (lbf/ft)": 0.173,
+    "Description": "288ct (VZW)"
+  },
+  {
+    "Size": "300PR Copper",
+    "Abbreviation": "300PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 1.4,
+    "Weight per Length (lbf/ft)": 1.506,
+    "Description": "300PR Copper"
+  },
+  {
+    "Size": "400PR Copper",
+    "Abbreviation": "400PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 1.6,
+    "Weight per Length (lbf/ft)": 1.973,
+    "Description": "400PR Copper"
+  },
+  {
+    "Size": "432ct",
+    "Abbreviation": "432ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.97,
+    "Weight per Length (lbf/ft)": 0.311,
+    "Description": "432ct"
+  },
+  {
+    "Size": "432ct (GIG)",
+    "Abbreviation": "432ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.62,
+    "Weight per Length (lbf/ft)": 0.104,
+    "Description": "432ct GIG"
+  },
+  {
+    "Size": "432ct (UPN)",
+    "Abbreviation": "432ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.83,
+    "Weight per Length (lbf/ft)": 0.162,
+    "Description": "432ct (UPN)"
+  },
+  {
+    "Size": "432ct (VZW)",
+    "Abbreviation": "432ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.78,
+    "Weight per Length (lbf/ft)": 0.173,
+    "Description": "432ct (VZW)"
+  },
+  {
+    "Size": "48ct",
+    "Abbreviation": "48ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.53,
+    "Weight per Length (lbf/ft)": 0.089,
+    "Description": "48ct"
+  },
+  {
+    "Size": "48ct (CTL)",
+    "Abbreviation": "48ct (CTL)",
+    "Groups": "CTL Fiber",
+    "Diameter (in)": 0.65,
+    "Weight per Length (lbf/ft)": 0.147,
+    "Description": "48ct (CTL)"
+  },
+  {
+    "Size": "48ct (EZE)",
+    "Abbreviation": "48ct (EZE)",
+    "Groups": "Ezee Fiber",
+    "Diameter (in)": 0.496,
+    "Weight per Length (lbf/ft)": 0.094,
+    "Description": "48ct (EZE)"
+  },
+  {
+    "Size": "48ct (GIG)",
+    "Abbreviation": "48ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.41,
+    "Weight per Length (lbf/ft)": 0.057,
+    "Description": "48ct GIG"
+  },
+  {
+    "Size": "48ct (UPN)",
+    "Abbreviation": "48ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.4,
+    "Weight per Length (lbf/ft)": 0.0437,
+    "Description": "48ct (UPN)"
+  },
+  {
+    "Size": "48ct (Vex)",
+    "Abbreviation": "48ct (Vex)",
+    "Groups": "Vexus Fiber",
+    "Diameter (in)": 0.48,
+    "Weight per Length (lbf/ft)": 0.091,
+    "Description": "48ct (Vex)"
+  },
+  {
+    "Size": "48ct (VZW)",
+    "Abbreviation": "48ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.41,
+    "Weight per Length (lbf/ft)": 0.073,
+    "Description": "48ct (VZW)"
+  },
+  {
+    "Size": "50PR Copper",
+    "Abbreviation": "50PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 0.74,
+    "Weight per Length (lbf/ft)": 0.372,
+    "Description": "50PR Copper"
+  },
+  {
+    "Size": "600PR Copper",
+    "Abbreviation": "600PR",
+    "Groups": "CTL Copper",
+    "Diameter (in)": 1.9,
+    "Weight per Length (lbf/ft)": 2.88,
+    "Description": "600PR Copper"
+  },
+  {
+    "Size": "72ct",
+    "Abbreviation": "72ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.64,
+    "Weight per Length (lbf/ft)": 0.155,
+    "Description": "72ct"
+  },
+  {
+    "Size": "72ct (CTL)",
+    "Abbreviation": "72ct (CTL)",
+    "Groups": "CTL Fiber",
+    "Diameter (in)": 0.68,
+    "Weight per Length (lbf/ft)": 0.166,
+    "Description": "72ct (CTL)"
+  },
+  {
+    "Size": "72ct (GIG)",
+    "Abbreviation": "72ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.44,
+    "Weight per Length (lbf/ft)": 0.067,
+    "Description": "72ct GIG"
+  },
+  {
+    "Size": "72ct (UPN)",
+    "Abbreviation": "72ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.4,
+    "Weight per Length (lbf/ft)": 0.0448,
+    "Description": "72ct (UPN)"
+  },
+  {
+    "Size": "72ct (VZW)",
+    "Abbreviation": "72ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.44,
+    "Weight per Length (lbf/ft)": 0.076,
+    "Description": "72ct (VZW)"
+  },
+  {
+    "Size": "864ct",
+    "Abbreviation": "864ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 1.17,
+    "Weight per Length (lbf/ft)": 0.415,
+    "Description": "864ct"
+  },
+  {
+    "Size": "864ct (GIG)",
+    "Abbreviation": "864ct GIG",
+    "Groups": "Gigapower Fiber",
+    "Diameter (in)": 0.92,
+    "Weight per Length (lbf/ft)": 0.244,
+    "Description": "864ct GIG"
+  },
+  {
+    "Size": "864ct (VZW)",
+    "Abbreviation": "864ct (VZW)",
+    "Groups": "Verizon Fiber",
+    "Diameter (in)": 0.96,
+    "Weight per Length (lbf/ft)": 0.284,
+    "Description": "864ct (VZW)"
+  },
+  {
+    "Size": "96ct",
+    "Abbreviation": "96ct",
+    "Groups": "Historical/Unk Fiber",
+    "Diameter (in)": 0.71,
+    "Weight per Length (lbf/ft)": 0.181,
+    "Description": "96ct"
+  },
+  {
+    "Size": "96ct (EZE)",
+    "Abbreviation": "96ct (EZE)",
+    "Groups": "Ezee Fiber",
+    "Diameter (in)": 0.562,
+    "Weight per Length (lbf/ft)": 0.107,
+    "Description": "96ct (EZE)"
+  },
+  {
+    "Size": "96ct (UPN)",
+    "Abbreviation": "96ct (UPN)",
+    "Groups": "UPN Fiber",
+    "Diameter (in)": 0.48,
+    "Weight per Length (lbf/ft)": 0.066,
+    "Description": "96ct (UPN)"
+  },
+  {
+    "Size": "96ct (Vex)",
+    "Abbreviation": "96ct (Vex)",
+    "Groups": "Vexus Fiber",
+    "Diameter (in)": 0.85,
+    "Weight per Length (lbf/ft)": 0.129,
+    "Description": "96ct (Vex)"
+  }
+]
